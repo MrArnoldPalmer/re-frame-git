@@ -7,9 +7,8 @@
     (let [repo-name (atom "")]
       [:div
         [:input {:type "text"
-                 :value @repo-name
                  :on-change #(reset! repo-name (-> % .-target .-value))}]
-        [:button {:on-click #(re-frame/dispatch (:get-repo @repo-name))}
+        [:button {:on-click #(re-frame/dispatch [:get-repo @repo-name])}
          "Get Repo"]])))
 
 (defn repo-details []
