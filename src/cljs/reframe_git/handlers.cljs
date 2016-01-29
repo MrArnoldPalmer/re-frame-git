@@ -9,9 +9,9 @@
   (str "https://api.github.com" endpoint))
 
 (re-frame/register-handler
- :initialize-db
- (fn  [_ _]
-   db/default-db))
+  :initialize-db
+  (fn [_ _]
+    db/default-db))
 
 (re-frame/register-handler
   :get-repo
