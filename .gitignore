@@ -3,3 +3,6 @@
 /*-init.clj
 /resources/public/js/compiled
 out
+.nrepl-port
+.lein-repl-history
+figwheel_server.log
