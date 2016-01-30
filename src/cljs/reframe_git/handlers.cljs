@@ -27,6 +27,7 @@
   :process-repo-response
   (fn
     [db [_ repo-name response]]
+    (re-frame/dispatch [:get-repo-languages repo-name])
     (assoc-in db [:repo-details] response)))
 
 (re-frame/register-handler
@@ -48,3 +49,16 @@
                :keywords? true})
     db))
 
+(re-frame/register-handler
+  :process-repo-languages-response
+  (fn
+    [db [_ repo-name response]]
+    (assoc-in db [:repo-languages] response)))
+
+(re-frame/register-handler
+  :process-repo-languages-error
+  (fn
+    [db [_ [repo-name response]]]
+    (println "Error getting repo language information for " repo-name)
+    (println response)
+    db))

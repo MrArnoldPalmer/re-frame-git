@@ -1,1 +1,2 @@
 require reframe-git.db
+require!
