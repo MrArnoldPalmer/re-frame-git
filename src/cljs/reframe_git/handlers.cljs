@@ -37,3 +37,14 @@
     (println response)
     db))
 
+(re-frame/register-handler
+  :get-repo-languages
+  (fn
+    [db [_ repo-name]]
+    (ajax/GET (build-api-url (str "/repos/" repo-name "/languages"))
+              {:handler #(re-frame/dispatch [:process-repo-languages-response repo-name %1])
+               :error-handler #(re-frame/dispatch [:process-repo-languages-error repo-name %1])
+               :response-format :json
+               :keywords? true})
+    db))
+
