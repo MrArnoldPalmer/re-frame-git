@@ -6,4 +6,4 @@
   (let [languages (re-frame/subscribe [:repo-languages])]
     (println @languages)
     [:div
-     (languages-tree/main [languages])]))
+     [languages-tree/main languages]]))

@@ -1,5 +1,6 @@
 (ns reframe-git.components.languages-tree
-  (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]
+            [reagent.core :as reagent]))
 
 (defn main
   [languages]
