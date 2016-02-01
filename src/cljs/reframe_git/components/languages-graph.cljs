@@ -1,11 +1,11 @@
-(ns reframe-git.components.languages-tree
+(ns reframe-git.components.languages-graph
   (:require [re-frame.core :as re-frame]
             [reagent.core :as reagent]))
 
 (defn main
   [languages]
   (reagent/create-class
-    {:display-name "languages-tree"
+    {:display-name "languages-graph"
      :component-did-mount
      #(println "component did mount")
      :reagent-render
