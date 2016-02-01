@@ -62,3 +62,28 @@
     (println "Error getting repo language information for " repo-name)
     (println response)
     db))
+
+(re-frame/register-handler
+  :get-repo-tree
+  (fn
+    [db [_ repo-name sha]]
+    (ajax/GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
+              {:handler #(re-frame/dispatch [:process-repo-tree-response repo-name %1])
+               :error-handler #(re-frame/dispatch [:process-repo-tree-error repo-name %1])
+               :response-format :json
+               :keywords? true})
+    db))
+
+(re-frame/register-handler
+  :process-repo-tree-response
+  (fn
+    [db [_ repo-name response]]
+    (assoc-in db [:repo-tree] response)))
+
+(re-frame/register-handler
+  :process-repo-tree-error
+  (fn
+    [db [_ repo-name response]]
+    (println "Error getting repo tree for " repo-name)
+    (println response)
+    db))

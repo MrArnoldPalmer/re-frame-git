@@ -3,14 +3,14 @@
               [re-frame.core :as re-frame]
               [reframe-git.handlers]
               [reframe-git.subs]
-              [reframe-git.views :as views]
+              [reframe-git.components.application :as application]
               [reframe-git.config :as config]))
 
 (when config/debug?
   (println "dev mode"))
 
 (defn mount-root []
-  (reagent/render [views/application]
+  (reagent/render [application/main]
                   (.getElementById js/document "app")))
 
 (defn ^:export init [] 

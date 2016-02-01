@@ -11,3 +11,8 @@
   :repo-languages
   (fn [db]
     (reaction (:repo-languages @db))))
+
+(re-frame/register-sub
+  :repo-tree
+  (fn [db]
+    (reaction (:repo-tree @db))))
