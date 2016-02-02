@@ -8,6 +8,15 @@
   [endpoint]
   (str "https://api.github.com" endpoint))
 
+(defn GET
+  "Generic http GET function for handlers"
+  [endpoint success-handler error-handler]
+  (ajax/GET endpoint
+            {:handler success-handler
+             :error-handler error-handler
+             :response-format :json
+             :keywords? true}))
+
 (re-frame/register-handler
   :initialize-db
   (fn [_ _]
@@ -16,12 +25,11 @@
 (re-frame/register-handler
   :get-repo
   (fn [db [_ repo-name]]
-    (ajax/GET (build-api-url (str "/repos/" repo-name))
-              {:handler #(re-frame/dispatch [:process-repo-response repo-name %1])
-               :error-handler #(re-frame/dispatch [:process-repo-error repo-name %1])
-               :response-format :json
-               :keywords? true})
+    (GET (build-api-url (str "/repos/" repo-name))
+         #(re-frame/dispatch [:process-repo-response repo-name %1])
+         #(re-frame/dispatch [:process-repo-error repo-name %1]))
     db))
+
 
 (re-frame/register-handler
   :process-repo-response
