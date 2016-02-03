@@ -40,7 +40,7 @@
 (re-frame/register-handler
   :process-repo-error
   (fn
-    [db [_ [repo-name response]]]
+    [db [_ repo-name response]]
     (println "Error getting repo information for " repo-name)
     (println response)
     db))
@@ -63,7 +63,7 @@
 (re-frame/register-handler
   :process-repo-languages-error
   (fn
-    [db [_ [repo-name response]]]
+    [db [_ repo-name response]]
     (println "Error getting repo language information for " repo-name)
     (println response)
     db))
