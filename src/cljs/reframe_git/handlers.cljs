@@ -30,7 +30,6 @@
          #(re-frame/dispatch [:process-repo-error repo-name %1]))
     db))
 
-
 (re-frame/register-handler
   :process-repo-response
   (fn
@@ -50,11 +49,9 @@
   :get-repo-languages
   (fn
     [db [_ repo-name]]
-    (ajax/GET (build-api-url (str "/repos/" repo-name "/languages"))
-              {:handler #(re-frame/dispatch [:process-repo-languages-response repo-name %1])
-               :error-handler #(re-frame/dispatch [:process-repo-languages-error repo-name %1])
-               :response-format :json
-               :keywords? true})
+    (GET (build-api-url (str "/repos/" repo-name "/languages"))
+         #(re-frame/dispatch [:process-repo-languages-response repo-name %1])
+         #(re-frame/dispatch [:process-repo-languages-error repo-name %1]))
     db))
 
 (re-frame/register-handler
@@ -75,11 +72,9 @@
   :get-repo-tree
   (fn
     [db [_ repo-name sha]]
-    (ajax/GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
-              {:handler #(re-frame/dispatch [:process-repo-tree-response repo-name %1])
-               :error-handler #(re-frame/dispatch [:process-repo-tree-error repo-name %1])
-               :response-format :json
-               :keywords? true})
+    (GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
+         #(re-frame/dispatch [:process-repo-tree-reponse repo-name %1])
+         #(re-frame/dispatch [:process-repo-tree-error repo-name %1]))
     db))
 
 (re-frame/register-handler
