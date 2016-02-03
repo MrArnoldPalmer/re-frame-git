@@ -35,6 +35,7 @@
   (fn
     [db [_ repo-name response]]
     (re-frame/dispatch [:get-repo-languages repo-name])
+    (re-frame/dispatch [:get-repo-branches repo-name])
     (assoc-in db [:repo-details] response)))
 
 (re-frame/register-handler
@@ -69,11 +70,37 @@
     db))
 
 (re-frame/register-handler
+  :get-repo-branches
+  (fn
+    [db [_ repo-name]]
+    (GET (build-api-url (str "/repos/" repo-name "/branches"))
+         #(re-frame/dispatch [:process-repo-branches-response repo-name %1])
+         #(re-frame/dispatch [:process-repo-branches-error repo-name %1]))
+    db))
+
+(re-frame/register-handler
+  :process-repo-branches-response
+  (fn
+    [db [_ repo-name response]]
+    (re-frame/dispatch
+      [:get-repo-tree
+       repo-name
+       (get-in (first (filter #(= (%1 :name) "master") response)) [:commit :sha])])
+    (assoc-in db [:repo-branches] response)))
+
+(re-frame/register-handler
+  :process-repo-branches-error
+  (fn
+    [db [_ repo-name response]]
+    (println "Error getting repo branch information for " repo-name)
+    (println response)))
+
+(re-frame/register-handler
   :get-repo-tree
   (fn
     [db [_ repo-name sha]]
     (GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
-         #(re-frame/dispatch [:process-repo-tree-reponse repo-name %1])
+         #(re-frame/dispatch [:process-repo-tree-response repo-name %1])
          #(re-frame/dispatch [:process-repo-tree-error repo-name %1]))
     db))
 
