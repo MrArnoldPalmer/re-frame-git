@@ -9,7 +9,7 @@
      :component-did-mount
      #(println "file-tree did mount")
      :reagent-render
-     (fn [tree]
+     (fn []
        (let [tree (re-frame/subscribe [:repo-tree])]
          [:div
           (keys @tree)]))}))
