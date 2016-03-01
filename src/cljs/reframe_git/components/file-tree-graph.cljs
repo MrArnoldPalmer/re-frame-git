@@ -16,7 +16,10 @@
             (let [path-strings (split (:path item) "/")
                   file (get-file-name path-strings)]
               (if file
-                (assoc-in formatted-map (map keyword (into [:root] (drop-last path-strings))) file))))
+                (do
+                  (println formatted-map)
+                  (assoc-in formatted-map (map keyword (into [:root] (drop-last path-strings))) file))
+                formatted-map)))
           {}
           (:tree tree-data)))
 
