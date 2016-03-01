@@ -3,13 +3,22 @@
              [re-frame.core :as re-frame]
              [reagent.core :as reagent]))
 
+(defn get-file-name
+  [path-strings]
+  (let [final (last path-strings)]
+    (if (boolean (re-find #"\." final))
+      final
+      nil)))
+
 (defn format-tree-graph-data
   [tree-data]
-  (->> (:tree tree-data)
-       (map :path)
-       (map #(split % "/"))
-       (map (fn [item] (map keyword item)))
-       (println)))
+  (reduce (fn [formatted-map item]
+            (let [path-strings (split (:path item) "/")
+                  file (get-file-name path-strings)]
+              (if file
+                (assoc-in formatted-map (map keyword (into [:root] (drop-last path-strings))) file))))
+          {}
+          (:tree tree-data)))
 
 (defn main
   [tree-graph-data]
@@ -17,7 +26,7 @@
     {:display-name "file-tree"
      :component-did-mount
      (fn []
-       (format-tree-graph-data tree-graph-data)
+       (println (format-tree-graph-data tree-graph-data))
        (println "graph component did mount"))
      :reagent-render
      (fn [tree-graph-data]

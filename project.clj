@@ -27,6 +27,7 @@
                                    :output-to "resources/public/js/compiled/app.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
+                                   :source-map true
                                    :source-map-timestamp true}}
 
                        {:id "min"
