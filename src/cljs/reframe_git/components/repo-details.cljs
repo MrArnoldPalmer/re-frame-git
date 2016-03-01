@@ -4,7 +4,7 @@
               [reframe-git.components.languages :as languages]
               [reframe-git.components.file-tree :as file-tree]))
 
-(defn main []
+(defn repo-details []
   (let [repo (re-frame/subscribe [:repo-details])]
     [:div
      (:full_name @repo)

@@ -3,7 +3,7 @@
               [re-frame.core :as re-frame]
               [reframe-git.handlers]
               [reframe-git.subs]
-              [reframe-git.components.application :as application]
+              [reframe-git.components.core :as application]
               [reframe-git.config :as config]))
 
 (when config/debug?
