@@ -15,10 +15,12 @@
   (reduce (fn [formatted-map item]
             (let [path-strings (split (:path item) "/")
                   file (get-file-name path-strings)]
-              (if file
+              (println formatted-map)
+              (if (and file (not (= (count path-strings) 1)))
                 (do
-                  (println formatted-map)
-                  (assoc-in formatted-map (map keyword (into [:root] (drop-last path-strings))) file))
+                  (println path-strings)
+                  (println file)
+                  (assoc-in formatted-map (mapv keyword (into [:root] (drop-last path-strings))) file))
                 formatted-map)))
           {}
           (:tree tree-data)))
