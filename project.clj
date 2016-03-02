@@ -18,7 +18,8 @@
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
-  :figwheel {:css-dirs ["resources/public/css"]}
+  :figwheel {:nrepl-port 7888
+             :css-dirs ["resources/public/css"]}
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
