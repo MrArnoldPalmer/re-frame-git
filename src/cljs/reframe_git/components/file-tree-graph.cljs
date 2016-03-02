@@ -3,26 +3,38 @@
              [re-frame.core :as re-frame]
              [reagent.core :as reagent]))
 
-(defn get-file-name
-  [path-strings]
-  (let [final (last path-strings)]
-    (if (boolean (re-find #"\." final))
-      final
-      nil)))
+(defn build-file-map
+  [file-name info]
+  {:name file-name
+   :size (:size info)})
+
+(defn format-item
+  [item]
+  (let [paths (split (:path item) "/")]
+    (if (->> paths
+             (last)
+             (re-find #"\.")
+             (boolean))
+      {:location (->> paths
+                      (drop-last)
+                      (map keyword)
+                      (into [:root]))
+       :type "file"
+       :details (build-file-map (last paths) item)}
+      {:location (->> paths
+                      (map keyword)
+                      (into [:root]))
+       :type "directory"})))
 
 (defn format-tree-graph-data
   [tree-data]
   (reduce (fn [formatted-map item]
-            (let [path-strings (split (:path item) "/")
-                  file (get-file-name path-strings)]
+            (let [formatted-item (format-item item)]
+              (println formatted-item)
               (println formatted-map)
-              (if (and file (not (= (count path-strings) 1)))
-                (do
-                  (println path-strings)
-                  (println file)
-                  (assoc-in formatted-map (mapv keyword (into [:root] (drop-last path-strings))) file))
-                formatted-map)))
-          {}
+              formatted-map))
+          {:files []
+           :directories []}
           (:tree tree-data)))
 
 (defn main
