@@ -41,78 +41,77 @@
   (println response)
   db)
 
-(re-frame/register-handler
-  :get-repo-languages
-  (fn
-    [db [_ repo-name]]
-    (GET (build-api-url (str "/repos/" repo-name "/languages"))
-         #(re-frame/dispatch [:process-repo-languages-response repo-name %1])
-         #(re-frame/dispatch [:process-repo-languages-error repo-name %1]))
-    db))
+(defn get-repo-languages
+  [db [_ repo-name]]
+  (GET (build-api-url (str "/repos/" repo-name "/languages"))
+       #(re-frame/dispatch [:process-repo-languages-response repo-name %1])
+       #(re-frame/dispatch [:process-repo-languages-error repo-name %1]))
+  db)
 
-(re-frame/register-handler
-  :process-repo-languages-response
-  (fn
-    [db [_ repo-name response]]
-    (assoc-in db [:repo-languages] response)))
+(defn process-repo-languages-response
+  [db [_ repo-name response]]
+  (assoc-in db [:repo-languages] response))
 
-(re-frame/register-handler
-  :process-repo-languages-error
-  (fn
-    [db [_ repo-name response]]
-    (println "Error getting repo language information for " repo-name)
-    (println response)
-    db))
+(defn process-repo-languages-error
+  [db [_ repo-name response]]
+  (println "Error getting repo language information for " repo-name)
+  (println response)
+  db)
 
-(re-frame/register-handler
-  :get-repo-branches
-  (fn
-    [db [_ repo-name]]
-    (GET (build-api-url (str "/repos/" repo-name "/branches"))
-         #(re-frame/dispatch [:process-repo-branches-response repo-name %1])
-         #(re-frame/dispatch [:process-repo-branches-error repo-name %1]))
-    db))
+(defn get-repo-branches
+  [db [_ repo-name]]
+  (GET (build-api-url (str "/repos/" repo-name "/branches"))
+       #(re-frame/dispatch [:process-repo-branches-response repo-name %1])
+       #(re-frame/dispatch [:process-repo-branches-error repo-name %1]))
+  db)
 
-(re-frame/register-handler
-  :process-repo-branches-response
-  (fn
-    [db [_ repo-name response]]
-    (re-frame/dispatch
-      [:get-repo-tree
-       repo-name
-       (get-in (first (filter #(= (%1 :name) "master") response)) [:commit :sha])])
-    (assoc-in db [:repo-branches] response)))
+(defn process-repo-branches-response
+  [db [_ repo-name response]]
+  (re-frame/dispatch
+    [:get-repo-tree
+     repo-name
+     (get-in (first (filter #(= (%1 :name) "master") response)) [:commit :sha])])
+  (assoc-in db [:repo-branches] response))
 
-(re-frame/register-handler
-  :process-repo-branches-error
-  (fn
-    [db [_ repo-name response]]
-    (println "Error getting repo branch information for " repo-name)
-    (println response)))
+(defn process-repo-branches-error
+  [db [_ repo-name response]]
+  (println "Error getting repo branch information for " repo-name)
+  (println response))
 
-(re-frame/register-handler
-  :get-repo-tree
-  (fn
-    [db [_ repo-name sha]]
-    (GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
-         #(re-frame/dispatch [:process-repo-tree-response repo-name %1])
-         #(re-frame/dispatch [:process-repo-tree-error repo-name %1]))
-    db))
+(defn get-repo-tree
+  [db [_ repo-name sha]]
+  (GET (build-api-url (str "/repos/" repo-name "/git/trees/" sha "?recursive=1"))
+       #(re-frame/dispatch [:process-repo-tree-response repo-name %1])
+       #(re-frame/dispatch [:process-repo-tree-error repo-name %1]))
+  db)
 
-(re-frame/register-handler
-  :process-repo-tree-response
-  (fn
-    [db [_ repo-name response]]
-    (assoc-in db [:repo-tree] response)))
+(defn process-repo-tree-response
+  [db [_ repo-name response]]
+  (assoc-in db [:repo-tree] response))
 
-(re-frame/register-handler
-  :process-repo-tree-error
-  (fn
-    [db [_ repo-name response]]
-    (println "Error getting repo tree for " repo-name)
-    (println response)
-    db))
+(defn process-repo-tree-error
+  [db [_ repo-name response]]
+  (println "Error getting repo tree for " repo-name)
+  (println response)
+  db)
 
 (re-frame/register-handler :get-repo get-repo)
 (re-frame/register-handler :process-repo-response process-repo-response)
 (re-frame/register-handler :process-repo-error process-repo-error)
+(re-frame/register-handler :get-repo-languages get-repo-languages)
+(re-frame/register-handler :process-repo-languages-response process-repo-languages-response)
+(re-frame/register-handler :process-repo-languages-error process-repo-languages-error)
+(re-frame/register-handler :get-repo-branches get-repo-branches)
+(re-frame/register-handler :process-repo-branches-response process-repo-branches-response)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :process-repo-branches-error process-repo-branches-error)
+(re-frame/register-handler :get-repo-tree get-repo-tree)
+(re-frame/register-handler :process-repo-tree-response process-repo-tree-response)
+(re-frame/register-handler :process-repo-tree-error process-repo-tree-error)

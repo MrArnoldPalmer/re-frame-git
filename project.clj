@@ -11,6 +11,8 @@
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-figwheel "0.5.0-2"]]
+
+  :hooks [leiningen.cljsbuild]
   
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.10"]
@@ -38,4 +40,12 @@
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false}}]})
+                                 :pretty-print false}}
+                       {:id "test"
+                        :source-paths ["src/cljs" "test/cljs"]
+                        :compiler {:output-to "resources/private/js/test.js"
+                                   :asset-path "js/compiled/out"
+                                   :pretty-print true}}]
+              :test-commands {"unit" ["phantomjs"
+                                      "resources/private/js/test.js"
+                                      "resources/private/test.html"]}})

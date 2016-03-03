@@ -16,8 +16,3 @@
   :repo-tree
   (fn [db]
     (reaction (:repo-tree @db))))
-
-(re-frame/register-sub
-  :db
-  (fn [db]
-    (reaction @db)))
