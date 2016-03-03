@@ -33,6 +33,8 @@
                      :compiler {:output-to "resources/public/css/compiled/screen.css"
                                 :pretty-print? true}}]}
 
+  :doo {:build "test"}
+
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
