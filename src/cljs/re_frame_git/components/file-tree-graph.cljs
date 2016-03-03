@@ -1,4 +1,4 @@
-(ns reframe-git.components.file-tree-graph
+(ns re-frame-git.components.file-tree-graph
    (:require [clojure.string :refer [split]]
              [re-frame.core :as re-frame]
              [reagent.core :as reagent]))

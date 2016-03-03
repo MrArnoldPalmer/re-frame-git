@@ -1,4 +1,4 @@
-(ns reframe-git.components.languages-graph
+(ns re-frame-git.components.languages-graph
   (:require [re-frame.core :as re-frame]
             [reagent.core :as reagent]))
 

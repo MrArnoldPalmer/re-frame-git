@@ -1,10 +1,10 @@
-(ns reframe-git.core
+(ns re-frame-git.core
     (:require [reagent.core :as reagent]
               [re-frame.core :as re-frame]
-              [reframe-git.handlers]
-              [reframe-git.subs]
-              [reframe-git.components.core :as application]
-              [reframe-git.config :as config]
+              [re-frame-git.handlers]
+              [re-frame-git.subs]
+              [re-frame-git.components.core :as application]
+              [re-frame-git.config :as config]
               [reagent-dev-tools.core :as dev-tools]
               [reagent-dev-tools.state-tree :as dev-state]))
 

@@ -1,4 +1,4 @@
-(ns reframe-git.config)
+(ns re-frame-git.config)
 
 (def debug?
   ^boolean js/goog.DEBUG)

@@ -1,4 +1,4 @@
-(ns reframe-git.subs
+(ns re-frame-git.subs
     (:require-macros [reagent.ratom :refer [reaction]])
     (:require [re-frame.core :as re-frame]))
 

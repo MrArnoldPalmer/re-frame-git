@@ -1,6 +1,6 @@
-(ns reframe-git.components.languages
+(ns re-frame-git.components.languages
   (:require [re-frame.core :as re-frame]
-            [reframe-git.components.languages-graph :as languages-graph]))
+            [re-frame-git.components.languages-graph :as languages-graph]))
 
 (defn main []
   (let [languages (re-frame/subscribe [:repo-languages])]

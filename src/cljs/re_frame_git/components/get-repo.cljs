@@ -1,4 +1,4 @@
-(ns reframe-git.components.get-repo
+(ns re-frame-git.components.get-repo
     (:require [re-frame.core :as re-frame]))
 
 (defn main []

@@ -1,51 +1,57 @@
-(defproject reframe-git "0.1.0-SNAPSHOT"
+(defproject re-frame-git "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [reagent "0.5.1"]
                  [re-frame "0.6.0"]
-                 [cljs-ajax "0.5.3"]]
+                 [cljs-ajax "0.5.3"]
+                 [garden "1.3.0"]]
 
   :min-lein-version "2.5.3"
 
   :source-paths ["src/clj"]
 
   :plugins [[lein-cljsbuild "1.1.1"]
-            [lein-figwheel "0.5.0-2"]]
+            [lein-figwheel "0.5.0-2"]
+            [lein-garden "0.2.6"]
+            [lein-doo "0.1.6"]]
 
-  :hooks [leiningen.cljsbuild]
-  
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
+                                    "test/js"
+                                    "resources/public/css/compiled"]
+
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.10"]
                                   [metosin/reagent-dev-tools "0.1.0"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
-
   :figwheel {:nrepl-port 7888
              :css-dirs ["resources/public/css"]}
 
+  :garden {:builds [{:id "screen"
+                     :source-paths ["src/clj"]
+                     :stylesheet re-frame-git.css/screen
+                     :compiler {:output-to "resources/public/css/compiled/screen.css"
+                                :pretty-print? true}}]}
+
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
-                        :figwheel {:on-jsload "reframe-git.core/mount-root"}
-                        :compiler {:main reframe-git.core
+                        :figwheel {:on-jsload "re-frame-git.core/mount-root"}
+                        :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
-                                   :source-map true
                                    :source-map-timestamp true}}
+
+                       {:id "test"
+                        :source-paths ["src/cljs" "test/cljs"]
+                        :compiler {:output-to "resources/public/js/compiled/test.js"
+                                   :main re-frame-git.runner
+                                   :optimizations :none}}
 
                        {:id "min"
                         :source-paths ["src/cljs"]
-                        :compiler {:main reframe-git.core
+                        :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                 :pretty-print false}}
-                       {:id "test"
-                        :source-paths ["src/cljs" "test/cljs"]
-                        :compiler {:output-to "resources/private/js/test.js"
-                                   :asset-path "js/compiled/out"
-                                   :pretty-print true}}]
-              :test-commands {"unit" ["phantomjs"
-                                      "resources/private/js/test.js"
-                                      "resources/private/test.html"]}})
+                                   :pretty-print false}}]})

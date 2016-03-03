@@ -1,6 +1,6 @@
-(ns reframe-git.handlers
+(ns re-frame-git.handlers
     (:require [re-frame.core :as re-frame]
-              [reframe-git.db :as db]
+              [re-frame-git.db :as db]
               [ajax.core :as ajax]))
 
 (defn build-api-url

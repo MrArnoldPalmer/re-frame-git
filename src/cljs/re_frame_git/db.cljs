@@ -1,4 +1,4 @@
-(ns reframe-git.db)
+(ns re-frame-git.db)
 
 (def default-db
   {:repo-details {}
