@@ -22,29 +22,24 @@
   (fn [_ _]
     db/default-db))
 
-(re-frame/register-handler
-  :get-repo
-  (fn [db [_ repo-name]]
-    (GET (build-api-url (str "/repos/" repo-name))
-         #(re-frame/dispatch [:process-repo-response repo-name %1])
-         #(re-frame/dispatch [:process-repo-error repo-name %1]))
-    db))
+(defn get-repo
+  [db [_ repo-name]]
+  (GET (build-api-url (str "/repos/" repo-name))
+       #(re-frame/dispatch [:process-repo-response repo-name %1])
+       #(re-frame/dispatch [:process-repo-error repo-name %1]))
+  db)
 
-(re-frame/register-handler
-  :process-repo-response
-  (fn
-    [db [_ repo-name response]]
-    (re-frame/dispatch [:get-repo-languages repo-name])
-    (re-frame/dispatch [:get-repo-branches repo-name])
-    (assoc-in db [:repo-details] response)))
+(defn process-repo-response
+  [db [_ repo-name response]]
+  (re-frame/dispatch [:get-repo-languages repo-name])
+  (re-frame/dispatch [:get-repo-branches repo-name])
+  (assoc-in db [:repo-details] response))
 
-(re-frame/register-handler
-  :process-repo-error
-  (fn
-    [db [_ repo-name response]]
-    (println "Error getting repo information for " repo-name)
-    (println response)
-    db))
+(defn process-repo-error
+  [db [_ repo-name response]]
+  (println "Error getting repo information for " repo-name)
+  (println response)
+  db)
 
 (re-frame/register-handler
   :get-repo-languages
@@ -117,3 +112,7 @@
     (println "Error getting repo tree for " repo-name)
     (println response)
     db))
+
+(re-frame/register-handler :get-repo get-repo)
+(re-frame/register-handler :process-repo-response process-repo-response)
+(re-frame/register-handler :process-repo-error process-repo-error)

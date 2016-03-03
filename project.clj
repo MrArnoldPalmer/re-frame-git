@@ -13,7 +13,8 @@
             [lein-figwheel "0.5.0-2"]]
   
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.10"]]
+                                  [org.clojure/tools.nrepl "0.2.10"]
+                                  [metosin/reagent-dev-tools "0.1.0"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]

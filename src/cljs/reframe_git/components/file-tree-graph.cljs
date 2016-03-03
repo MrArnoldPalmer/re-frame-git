@@ -43,7 +43,7 @@
     {:display-name "file-tree"
      :component-did-mount
      (fn []
-       (println (format-tree-graph-data tree-graph-data))
+       ;(println (format-tree-graph-data tree-graph-data))
        (println "graph component did mount"))
      :reagent-render
      (fn [tree-graph-data]
