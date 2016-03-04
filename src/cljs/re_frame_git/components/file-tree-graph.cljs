@@ -26,15 +26,16 @@
                       (into [:root]))
        :type "directory"})))
 
-(defn format-tree-graph-data
+(defn format-tree-map
   [tree-data]
   (reduce (fn [formatted-map item]
             (let [formatted-item (format-item item)]
-              (println formatted-item)
-              (println formatted-map)
-              formatted-map))
-          {:files []
-           :directories []}
+              (if (= (:type formatted-item) "directory")
+                (assoc-in formatted-map (:location formatted-item) {:files []})
+                (let [file (:details formatted-item)
+                      directory (conj (:location formatted-item) :files)]
+                  (assoc-in formatted-map directory (conj (get-in formatted-map directory) file))))))
+          {}
           (:tree tree-data)))
 
 (defn main
@@ -43,8 +44,9 @@
     {:display-name "file-tree"
      :component-did-mount
      (fn []
-       ;(println (format-tree-graph-data tree-graph-data))
-       (println "graph component did mount"))
+       (-> tree-graph-data
+           format-tree-map
+           println))
      :reagent-render
      (fn [tree-graph-data]
        [:div
