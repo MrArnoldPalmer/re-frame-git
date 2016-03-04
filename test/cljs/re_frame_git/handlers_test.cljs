@@ -7,10 +7,20 @@
 (deftest build-api-url
   (testing "returns an api endpoint url based on the parameter string argument"
     (let [url (handlers/build-api-url "/endpoint")]
-      (is (= (str "https://api.github.com" "/endpoint"))))))
+      (is (= (str "https://api.github.com" "/endpoint") url)))))
 
 (deftest GET
   (testing "makes an http GET request to URL passed in using core.ajax"
-    (let [url "test-url"]
-      (with-redefs [ajax/GET #(mock-ajax-success [%1 %2])]
-        (println (handlers/GET url :success-function :error-function))))))
+    (with-redefs [ajax/GET #(mock-ajax-success [%1 %2])]
+      (let [url "test-url"
+            handler "success-function"
+            error "error-function"
+            response (handlers/GET url handler error)]
+        (println response)
+        (println (get-in response [:options 1 :handler]))
+        (is (= (:status response) 200))
+        (is (= (get-in response [:options 0]) url))
+        (is (= (get-in response [:options 1 :handler]) handler))
+        (is (= (get-in response [:options 1 :error-handler]) error))
+        (is (= (get-in response [:options 1 :response-format]) :json))
+        (is (= (get-in response [:options 1 :keywords?]) true))))))
