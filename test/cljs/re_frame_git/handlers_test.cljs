@@ -16,11 +16,21 @@
             handler "success-function"
             error "error-function"
             response (handlers/GET url handler error)]
-        (println response)
-        (println (get-in response [:options 1 :handler]))
         (is (= (:status response) 200))
         (is (= (get-in response [:options 0]) url))
         (is (= (get-in response [:options 1 :handler]) handler))
         (is (= (get-in response [:options 1 :error-handler]) error))
         (is (= (get-in response [:options 1 :response-format]) :json))
         (is (= (get-in response [:options 1 :keywords?]) true))))))
+
+(deftest process-repo-response
+  (testing "returns MAP with response maps associated with :repo-details in map parameter"
+    (let [repo-details "repo-details"
+          db (handlers/process-repo-response {} [_ _ repo-details])]
+      (is (= (:repo-details db) repo-details)))))
+
+(deftest process-repo-error
+  (testing "prints error to console, returns map parameter as passed in"
+    (let [db {:test "test"}
+          result (handlers/process-repo-error db)]
+      (is (= result db)))))
