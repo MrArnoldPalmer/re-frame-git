@@ -1,0 +1,15 @@
+body {
+  margin: auto;
+  position: relative;
+  padding: 20px;
+  height: 100%;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: solid 1px white;
+  line-height: 0.95;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 6px;
+  background-image: linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+}

@@ -39,60 +39,84 @@
           {}
           (:tree tree-data)))
 
-(defn build-tree-map
-  []
-  (-> js/d3
-      (.-layout)
-      (.treemap)
-      (.size [500 500])
-      (.sticky true)
-      (.value (fn [d] (.-size d)))))
-
 (defn position
-  [this]
-  (println this)
-  (-> this
-      (.style "left" (fn [d] (str (.-x d) "px")))
-      (.style "top" (fn [d] (str (.-x d) "px")))
-      (.style "width" (fn [d] (str (max 0, (- (.-dx d) 1)) "px")))
-      (.style "height" (fn [d] (str (max 0, (- (.-dy d) 1)) "px")))))
+  []
+  (this-as this
+           (-> this
+               (.style "left"
+                       (fn [d]
+                         (str (.-x d) "px")))
+               (.style "top"
+                       (fn [d]
+                         (str (.-y d) "px")))
+               (.style "width"
+                       (fn [d]
+                         (str (max 0 (- (.-dx d) 1)) "px")))
+               (.style "height"
+                       (fn [d]
+                         (str (max 0 (- (.-dy d) 1)) "px"))))))
 
-(defn mount-tree-map
-  [tree-map element data]
-  (let [div (-> js/d3
-                (.select element)
-                (.append "div")
-                (.style "position" "relative")
-                (.style "width" "500px")
-                (.style "height" "500px"))
+(defn compute-font-size
+  [d]
+  (str
+    (max 20 (.sqrt js/Math (.-area d)))
+    "px"))
+
+(defn render-tree-map
+  [tree-map-data-map]
+  (let [width (- (.-innerWidth js/window) 40)
+        height (- (.-innerHeight js/window) 40)
+        color (-> js/d3
+                  (.-scale)
+                  (.category20c))
+        div (-> js/d3
+                (.select "#file-tree-graph")
+                ;(.append "div")
+                (.style "position" "relative"))
+        tree-map (-> js/d3
+                     (.-layout)
+                     (.treemap)
+                     (.size (clj->js [width height]))
+                     (.value (fn [d]
+                               (.-size d))))
         node (-> div
-                 (.datum data)
+                 (.datum (clj->js tree-map-data-map))
                  (.selectAll ".node")
                  (.data (.-nodes tree-map))
                  (.enter)
                  (.append "div")
                  (.attr "class" "node")
-                 (.style "background" "blue")
-                 (.style "position" "absolute")
-                 (.style "width" "100%")
-                 (.style "height" "100%")
-                 (.text (fn [d] (.-name d))))]
+                 (.call position)
+                 (.style "background-color"
+                         (fn [d]
+                           (if (= (.-name d) "tree")
+                             "#fff"
+                             (color (.-name d)))))
+                 (.append "div")
+                 (.style "font-size" compute-font-size)
+                 (.text (fn [d]
+                          (if (contains? (js->clj d) :children)
+                            nil
+                            (.-name d)))))]
     (println div)
+    (println tree-map)
     (println node)))
+
+(def test-data
+  {:name "test"
+   :children [{:name "again" :size 100} {:name "again2" :size 500} {:name "nested" :children [{:name "nested file" :size 350}]}]})
 
 (defn main
   [tree-graph-data]
   (reagent/create-class
     {:display-name "file-tree"
-     :component-did-update
-     (fn [tree-graph-data]
-       (println "update")
-       (let [tree-map (build-tree-map)]
-         (mount-tree-map tree-map "#file-tree-graph" (format-tree-map-data tree-graph-data))))
      :component-did-mount
      (fn []
-       (let [tree-map (build-tree-map)]
-         (mount-tree-map tree-map "#file-tree-graph" (format-tree-map-data tree-graph-data))))
+       (println "mount")
+       (let [tree-map-data (format-tree-map-data tree-graph-data)]
+         (println tree-map-data)
+         (render-tree-map tree-map-data)
+         ))
      :reagent-render
      (fn [tree-graph-data]
        [:div#file-tree-graph])}))
