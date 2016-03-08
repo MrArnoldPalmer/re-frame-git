@@ -115,8 +115,7 @@
        (println "mount")
        (let [tree-map-data (format-tree-map-data tree-graph-data)]
          (println tree-map-data)
-         (render-tree-map tree-map-data)
-         ))
+         (render-tree-map test-data)))
      :reagent-render
      (fn [tree-graph-data]
        [:div#file-tree-graph])}))
