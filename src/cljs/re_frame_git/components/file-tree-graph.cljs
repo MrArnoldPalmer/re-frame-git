@@ -71,7 +71,6 @@
                   (.category20c))
         div (-> js/d3
                 (.select "#file-tree-graph")
-                ;(.append "div")
                 (.style "position" "relative"))
         tree-map (-> js/d3
                      (.-layout)
@@ -93,14 +92,7 @@
                              "#fff"
                              (color (.-name d)))))
                  (.append "div")
-                 (.style "font-size" compute-font-size)
-                 (.text (fn [d]
-                          (if (contains? (js->clj d) :children)
-                            nil
-                            (.-name d)))))]
-    (println div)
-    (println tree-map)
-    (println node)))
+                 (.style "font-size" compute-font-size))]))
 
 (def test-data
   {:name "test"
