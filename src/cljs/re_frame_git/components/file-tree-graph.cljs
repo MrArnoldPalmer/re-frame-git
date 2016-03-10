@@ -4,40 +4,6 @@
              [reagent.core :as reagent]
              [cljsjs.d3]))
 
-(defn build-file-map
-  [file-name info]
-  {:name file-name
-   :size (:size info)})
-
-(defn format-item
-  [item]
-  (let [paths (split (:path item) "/")]
-    (if (->> paths
-             (last)
-             (re-find #"\.")
-             (boolean))
-      {:location (->> paths
-                      (drop-last)
-                      (map keyword)
-                      (into [:root]))
-       :type "file"
-       :details (build-file-map (last paths) item)}
-      {:location (->> paths
-                      (map keyword)
-                      (into [:root]))
-       :type "directory"})))
-
-(defn format-tree-map-data
-  [tree-data]
-  (reduce (fn [formatted-map item]
-            (let [formatted-item (format-item item)]
-              (if (= (:type formatted-item) "directory")
-                (assoc-in formatted-map (:location formatted-item) {:children []})
-                (let [file (:details formatted-item)
-                      directory (conj (:location formatted-item) :children)]
-                  (assoc-in formatted-map directory (conj (get-in formatted-map directory) file))))))
-          {}
-          (:tree tree-data)))
 
 (defn position
   []
@@ -98,6 +64,44 @@
   {:name "test"
    :children [{:name "again" :size 100} {:name "again2" :size 500} {:name "nested" :children [{:name "nested file" :size 350}]}]})
 
+(defn format-file-map
+  [item]
+  (let [file-structure (split (:path item) "/")
+        file (last file-structure)
+        path (into ["root"] (drop-last file-structure))]
+    {:location path
+     :name file
+     :size (:size item)}))
+
+(defn deep-merge [formatted-map item-map]
+  (merge-with (fn [x y]
+                (println x y)
+                (cond (vector? y) (into x y) 
+                      (map? y) (deep-merge x y)
+                      :else y)) 
+                 formatted-map item-map))
+
+(defn merge-directory
+  [formatted-map item]
+  (let [path-vector (:location item)
+        nested-item (reduce (fn [formatted-item path]
+                              (if (empty? formatted-item)
+                                [{:name (:name item) :size (:size item)}]
+                                {:name path :children formatted-item}))
+                            []
+                            path-vector)]
+    (deep-merge formatted-map {:name "root" :children nested-item})))
+
+(defn format-tree-map-data
+  [tree-graph-data]
+  (->> tree-graph-data
+       (:tree)
+       (filter #(= (:type %1) "blob"))
+       (map format-file-map)
+       ;(sort-by #(count (:location %1)))
+       (reduce (fn [formatted-map item]
+                 (merge-directory formatted-map item))
+               {:name "root" :children[]})))
 (defn main
   [tree-graph-data]
   (reagent/create-class
@@ -107,7 +111,7 @@
        (println "mount")
        (let [tree-map-data (format-tree-map-data tree-graph-data)]
          (println tree-map-data)
-         (render-tree-map test-data)))
+         (render-tree-map tree-map-data)))
      :reagent-render
      (fn [tree-graph-data]
        [:div#file-tree-graph])}))
