@@ -60,13 +60,55 @@
                  (.append "div")
                  (.style "font-size" compute-font-size))]))
 
+(defn format-item
+  [item]
+  (if (= (:type item) "blob")
+    (let [path-vector (split (:path item) "/")
+          path (drop-last path-vector)
+          file (last path-vector)]
+      {:type "file"
+       :path path
+       :name file
+       :size (:size item)})
+    (let [path-vector (split (:path item) "/")
+          path (drop-last path-vector)
+          name (last path-vector)]
+      {:type "tree"
+       :path path
+       :name name})))
+
+(defn index-of
+  [item items]
+  (.indexOf (to-array items) item))
+
+(defn deep-merge
+  [formatted-map item]
+  (let [indices (reduce (fn [index-vector path]
+                          (let [obj (first (filter #(= (:name %1) path) (get-in formatted-map index-vector)))]
+                            (if (nil? obj)
+                              index-vector
+                              (into index-vector [(index-of obj (get-in formatted-map index-vector)) :children]))))
+                        [:children]
+                        (:path item))]
+    (if (= (:type item) "tree")
+      (update-in formatted-map indices conj {:name (:name item) :children []})
+      (update-in formatted-map indices conj {:name (:name item) :size (:size item)}))))
+
+(defn format-file-tree-data
+  [tree-graph-data]
+  (reduce (fn [formatted-map item]
+            (let [item (format-item item)]
+              (deep-merge formatted-map item)))
+          {:name "root" :children []}
+          (:tree tree-graph-data)))
+
 (defn main
   [tree-graph-data]
   (reagent/create-class
     {:display-name "file-tree"
      :component-did-mount
      (fn []
-       )
+       (render-tree-map (format-file-tree-data tree-graph-data)))
      :reagent-render
      (fn [tree-graph-data]
        [:div#file-tree-graph])}))
