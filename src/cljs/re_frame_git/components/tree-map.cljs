@@ -1,6 +1,5 @@
-(ns re-frame-git.components.file-tree-graph
-   (:require [clojure.string :refer [split]]
-             [re-frame.core :as re-frame]
+(ns re-frame-git.components.tree-map
+   (:require [re-frame.core :as re-frame]
              [reagent.core :as reagent]
              [cljsjs.d3]))
 
@@ -27,6 +26,12 @@
   (str
     (max 20 (.sqrt js/Math (.-area d)))
     "px"))
+
+(defn remove-tree-map
+  [id]
+  (-> js/d3
+      (.select id)
+      (.remove)))
 
 (defn render-tree-map
   [tree-map-data-map]
@@ -60,47 +65,19 @@
                  (.append "div")
                  (.style "font-size" compute-font-size))]))
 
-(defn format-item
-  [item]
-  (if (= (:type item) "blob")
-    (let [path-vector (split (:path item) "/")]
-      {:path (drop-last path-vector)
-       :details {:name (last path-vector)
-                 :size (:size item)}})
-    (let [path-vector (split (:path item) "/")]
-      {:path (drop-last path-vector)
-       :details {:name (last path-vector)
-                 :children []}})))
-
-(defn get-indices
-  [formatted-map item]
-  (reduce (fn [index-vector path]
-            (let [obj (first (filter #(= (:name %1) path) (get-in formatted-map index-vector)))]
-              (if (nil? obj)
-                index-vector
-                (into index-vector [(.indexOf (to-array (get-in formatted-map index-vector)) obj) :children]))))
-          [:children]
-          (:path item)))
-
-(defn format-file-tree-data
-  [tree-graph-data]
-  (reduce (fn [formatted-map item]
-            (let [item (format-item item)]
-              (update-in formatted-map
-                         (get-indices formatted-map item)
-                         conj (:details item))))
-          {:name "root" :children []}
-          (:tree tree-graph-data)))
-
-(defn main
+(defn tree-map
   [tree-graph-data]
   (reagent/create-class
     {:display-name "file-tree"
+     :component-did-update
+     (fn []
+       (println "did update")
+       (remove-tree-map "#file-tree-graph")
+       (render-tree-map tree-graph-data))
      :component-did-mount
      (fn []
-       (println (format-file-tree-data tree-graph-data))
-       (render-tree-map (format-file-tree-data tree-graph-data)))
+       (render-tree-map tree-graph-data))
      :reagent-render
-     (fn [tree-graph-data]
+     (fn []
        [:div#file-tree-graph])}))
 
