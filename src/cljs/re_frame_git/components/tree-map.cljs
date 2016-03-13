@@ -27,35 +27,35 @@
     (max 20 (.sqrt js/Math (.-area d)))
     "px"))
 
-(defn remove-tree-map
-  [id]
+(def tree-map-graph
   (-> js/d3
-      (.select id)
-      (.remove)))
+      (.-layout)
+      (.treemap)
+      (.size (clj->js [(- (.-innerWidth js/window) 40) (- (.-innerHeight js/window) 40)]))
+      (.sticky true)
+      (.value (fn [d]
+                (.-size d)))))
+
+(def color
+  (-> js/d3
+      (.-scale)
+      (.category20c)))
 
 (defn render-tree-map
   [tree-map-data-map]
-  (let [width (- (.-innerWidth js/window) 40)
-        height (- (.-innerHeight js/window) 40)
-        color (-> js/d3
-                  (.-scale)
-                  (.category20c))
-        div (-> js/d3
+  (let [div (-> js/d3
                 (.select "#file-tree-graph")
+                (.append "div")
                 (.style "position" "relative"))
-        tree-map (-> js/d3
-                     (.-layout)
-                     (.treemap)
-                     (.size (clj->js [width height]))
-                     (.value (fn [d]
-                               (.-size d))))
         node (-> div
                  (.datum (clj->js tree-map-data-map))
                  (.selectAll ".node")
-                 (.data (.-nodes tree-map))
+                 (.data (.-nodes tree-map-graph))
                  (.enter)
                  (.append "div")
                  (.attr "class" "node")
+                 (.transition)
+                 (.duration 1500)
                  (.call position)
                  (.style "background-color"
                          (fn [d]
@@ -69,15 +69,15 @@
   [tree-graph-data]
   (reagent/create-class
     {:display-name "file-tree"
-     :component-did-update
-     (fn []
+     :component-will-receive-props
+     (fn [_ [_ new-data]]
        (println "did update")
-       (remove-tree-map "#file-tree-graph")
-       (render-tree-map tree-graph-data))
+       (println new-data)
+       (render-tree-map new-data))
      :component-did-mount
      (fn []
        (render-tree-map tree-graph-data))
-     :reagent-render
+     :render
      (fn []
        [:div#file-tree-graph])}))
 
