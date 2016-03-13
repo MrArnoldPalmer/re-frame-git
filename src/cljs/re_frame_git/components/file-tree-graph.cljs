@@ -63,42 +63,32 @@
 (defn format-item
   [item]
   (if (= (:type item) "blob")
-    (let [path-vector (split (:path item) "/")
-          path (drop-last path-vector)
-          file (last path-vector)]
-      {:type "file"
-       :path path
-       :name file
-       :size (:size item)})
-    (let [path-vector (split (:path item) "/")
-          path (drop-last path-vector)
-          name (last path-vector)]
-      {:type "tree"
-       :path path
-       :name name})))
+    (let [path-vector (split (:path item) "/")]
+      {:path (drop-last path-vector)
+       :details {:name (last path-vector)
+                 :size (:size item)}})
+    (let [path-vector (split (:path item) "/")]
+      {:path (drop-last path-vector)
+       :details {:name (last path-vector)
+                 :children []}})))
 
-(defn index-of
-  [item items]
-  (.indexOf (to-array items) item))
-
-(defn deep-merge
+(defn get-indices
   [formatted-map item]
-  (let [indices (reduce (fn [index-vector path]
-                          (let [obj (first (filter #(= (:name %1) path) (get-in formatted-map index-vector)))]
-                            (if (nil? obj)
-                              index-vector
-                              (into index-vector [(index-of obj (get-in formatted-map index-vector)) :children]))))
-                        [:children]
-                        (:path item))]
-    (if (= (:type item) "tree")
-      (update-in formatted-map indices conj {:name (:name item) :children []})
-      (update-in formatted-map indices conj {:name (:name item) :size (:size item)}))))
+  (reduce (fn [index-vector path]
+            (let [obj (first (filter #(= (:name %1) path) (get-in formatted-map index-vector)))]
+              (if (nil? obj)
+                index-vector
+                (into index-vector [(.indexOf (to-array (get-in formatted-map index-vector)) obj) :children]))))
+          [:children]
+          (:path item)))
 
 (defn format-file-tree-data
   [tree-graph-data]
   (reduce (fn [formatted-map item]
             (let [item (format-item item)]
-              (deep-merge formatted-map item)))
+              (update-in formatted-map
+                         (get-indices formatted-map item)
+                         conj (:details item))))
           {:name "root" :children []}
           (:tree tree-graph-data)))
 
@@ -108,6 +98,7 @@
     {:display-name "file-tree"
      :component-did-mount
      (fn []
+       (println (format-file-tree-data tree-graph-data))
        (render-tree-map (format-file-tree-data tree-graph-data)))
      :reagent-render
      (fn [tree-graph-data]
