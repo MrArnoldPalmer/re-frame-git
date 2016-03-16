@@ -3,7 +3,6 @@
              [reagent.core :as reagent]
              [cljsjs.d3]))
 
-
 (defn position
   []
   (this-as this
@@ -21,46 +20,38 @@
                        (fn [d]
                          (str (max 0 (- (.-dy d) 1)) "px"))))))
 
-(defn compute-font-size
-  [d]
-  (str
-    (max 20 (.sqrt js/Math (.-area d)))
-    "px"))
-
-(def tree-map-graph
-  (-> js/d3
-      (.-layout)
-      (.treemap)
-      (.size (clj->js [(- (.-innerWidth js/window) 40) (- (.-innerHeight js/window) 40)]))
-      (.value (fn [d]
-                (.-size d)))))
-
-(def color
-  (-> js/d3
-      (.-scale)
-      (.category20c)))
-
 (defn render-tree-map
-  [tree-map-data-map]
-  (let [div (-> js/d3
+  [tree-map-data]
+  (let [tree-map (-> js/d3
+                     (.-layout)
+                     (.treemap)
+                     (.size (clj->js [(- (.-innerWidth js/window) 40) (- (.-innerHeight js/window) 40)]))
+                     (.value (fn [d]
+                              (.-size d))))
+        color (-> js/d3
+                  (.-scale)
+                  (.category20c))
+        div (-> js/d3
                 (.select "#file-tree-graph")
                 (.append "div")
-                (.style "position" "relative"))
-        node (-> div
-                 (.datum (clj->js tree-map-data-map))
-                 (.selectAll ".node")
-                 (.data (.-nodes tree-map-graph))
-                 (.enter)
-                 (.append "div")
-                 (.attr "class" "node")
-                 (.transition)
-                 (.duration 1500)
-                 (.call position)
-                 (.style "background-color" (fn [d]
-                                               (if (= (.-name d) "tree")
-                                                 "#fff"
-                                                 (color (.-name d)))))
-                 (.style "font-size" compute-font-size))]))
+                (.style "position" "relative"))]
+    (-> div
+        (.datum (clj->js tree-map-data))
+        (.selectAll ".node")
+        (.data (.-nodes tree-map))
+        (.enter)
+        (.append "div")
+        (.attr "class" "node")
+        (.transition)
+        (.duration 1500)
+        (.call position)
+        (.style "background-color" (fn [d]
+                                      (if (not (nil? (.-children d)))
+                                        (color (.-name d)))))
+        (.text (fn [d]
+                 (if (nil? (.-children d))
+                   (.-name d)))))))
+                          
 
 (defn tree-map
   [tree-graph-data]
