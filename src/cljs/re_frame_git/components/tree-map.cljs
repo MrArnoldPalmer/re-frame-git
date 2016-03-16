@@ -32,7 +32,6 @@
       (.-layout)
       (.treemap)
       (.size (clj->js [(- (.-innerWidth js/window) 40) (- (.-innerHeight js/window) 40)]))
-      (.sticky true)
       (.value (fn [d]
                 (.-size d)))))
 
@@ -57,12 +56,10 @@
                  (.transition)
                  (.duration 1500)
                  (.call position)
-                 (.style "background-color"
-                         (fn [d]
-                           (if (= (.-name d) "tree")
-                             "#fff"
-                             (color (.-name d)))))
-                 (.append "div")
+                 (.style "background-color" (fn [d]
+                                               (if (= (.-name d) "tree")
+                                                 "#fff"
+                                                 (color (.-name d)))))
                  (.style "font-size" compute-font-size))]))
 
 (defn tree-map
@@ -71,8 +68,6 @@
     {:display-name "file-tree"
      :component-will-receive-props
      (fn [_ [_ new-data]]
-       (println "did update")
-       (println new-data)
        (render-tree-map new-data))
      :component-did-mount
      (fn []

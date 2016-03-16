@@ -5,7 +5,8 @@
                  [re-frame "0.7.0-alpha-3"]
                  [cljs-ajax "0.5.3"]
                  [garden "1.3.2"]
-                 [cljsjs/d3 "3.5.7-1"]]
+                 [cljsjs/d3 "3.5.7-1"]
+                 [secretary "1.2.3"]]
 
   :min-lein-version "2.5.3"
 

@@ -37,5 +37,6 @@
 
 (defn file-tree-graph-container []
   (let [tree (re-frame/subscribe [:repo-tree])]
-    [:div
-     [tree-map (format-file-tree-data @tree)]]))
+    (if (not (empty? @tree))
+      [:div
+       [tree-map (format-file-tree-data @tree)]])))
