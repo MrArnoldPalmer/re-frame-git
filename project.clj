@@ -29,7 +29,7 @@
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
                        :prep-tasks ["compile" ["cljsbuild" "once"]]
-                       ;             "compile" ["garden" "once"]
+                       :hooks [leiningen.garden]
                        :aot :all
                        :omit-source true}}
 
