@@ -40,7 +40,7 @@
   :doo {:build "test"}
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src"]
+                        :source-paths ["src/cljs" "src/clj"]
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
@@ -52,13 +52,13 @@
                                    :verbose true}}
 
                        {:id "test"
-                        :source-paths ["src" "test"]
+                        :source-paths ["src/cljs" "src/clj"]
                         :compiler {:output-to "resources/public/js/compiled/test.js"
                                    :main re-frame-git.runner
                                    :optimizations :none}}
 
                        {:id "min"
-                        :source-paths ["src"]
+                        :source-paths ["src/cljs" "src/clj"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced

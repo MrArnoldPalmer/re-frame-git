@@ -1,0 +1,20 @@
+box: clojure
+services:
+  - id: mongo
+build:
+  steps:
+    - script:
+      name: test
+      code: |
+        lein doo test phantom
+    - script:
+      name: build
+      code: |
+        lein uberjar
+dev:
+  steps:
+    - script:
+      name: env
+      code: env
+    -internal/watch:
+      code: lein figwheel dev & lein garden auto
