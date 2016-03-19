@@ -7,6 +7,7 @@
                  [garden "1.3.2"]
                  [cljsjs/d3 "3.5.7-1"]
                  [secretary "1.2.3"]
+                 [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]]
 
   :min-lein-version "2.5.3"
@@ -23,8 +24,7 @@
                                     "resources/public/css/compiled"]
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.10"]
-                                  [metosin/reagent-dev-tools "0.1.0"]]
+                                  [org.clojure/tools.nrepl "0.2.10"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
                        :prep-tasks ["compile" ["cljsbuild" "once" "min"]
