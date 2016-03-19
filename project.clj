@@ -25,7 +25,12 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.10"]
                                   [metosin/reagent-dev-tools "0.1.0"]]
-                   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
+                   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
+             :uberjar {:source-paths ["src/clj" "src/cljs"]
+                       :prep-tasks ["compile" ["cljsbuild" "once" "min"]
+                                    "garden" ["once"]]
+                       :aot :all
+                       :omit-source true}}
 
   :figwheel {:nrepl-port 7888
              :ring-handler re-frame-git.core/server

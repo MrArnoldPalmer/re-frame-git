@@ -4,9 +4,9 @@
               [re-frame-git.handlers]
               [re-frame-git.subs]
               [re-frame-git.components.core :refer [main]]
-              [re-frame-git.config :as config]
-              [reagent-dev-tools.core :as dev-tools]
-              [reagent-dev-tools.state-tree :as dev-state]))
+              [re-frame-git.config :as config]))
+              ;[reagent-dev-tools.core :as dev-tools]
+              ;[reagent-dev-tools.state-tree :as dev-state]))
 
 (when config/debug?
   (println "dev mode"))
@@ -17,8 +17,7 @@
 (defn mount-root []
   (if config/debug?
     (reagent/render [:div
-                     [main]
-                     [dev-tools/dev-tool {}]]
+                     [main]]
                     (.getElementById js/document "app"))
     (reagent/render [main]
                     (.getElementById js/document "app"))))
