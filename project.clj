@@ -12,12 +12,13 @@
 
   :min-lein-version "2.5.3"
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "src/cljs"]
 
   :plugins [[lein-cljsbuild "1.1.2"]
             [lein-figwheel "0.5.0-6"]
             [lein-garden "0.2.6"]
-            [lein-doo "0.1.6"]]
+            [lein-doo "0.1.6"]
+            [lein-ring "0.9.7"]]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
                                     "test/js"
@@ -27,13 +28,15 @@
                                   [org.clojure/tools.nrepl "0.2.10"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
-                       :prep-tasks ["compile" ["cljsbuild" "once" "min"]
-                                    "garden" ["once"]]
+                       :prep-tasks ["compile" ["cljsbuild" "once"]]
+                       ;             "compile" ["garden" "once"]
                        :aot :all
                        :omit-source true}}
 
+  :ring {:handler re-frame-git.server.core/server}
+
   :figwheel {:nrepl-port 7888
-             :ring-handler re-frame-git.core/server
+             :ring-handler re-frame-git.server.core/server
              :css-dirs ["resources/public/css"]}
 
   :garden {:builds [{:id "screen"
@@ -66,6 +69,7 @@
                         :source-paths ["src/cljs" "src/clj"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
+                                   :asset-path "js/compiled/out"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
                                    :pretty-print false}}]})
