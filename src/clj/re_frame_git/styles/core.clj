@@ -1,4 +1,4 @@
-(ns re-frame-git.css
+(ns re-frame-git.styles.core
   (:require [garden.def :refer [defstyles]]))
 
 (defstyles screen

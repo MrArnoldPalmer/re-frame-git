@@ -6,7 +6,8 @@
                  [cljs-ajax "0.5.3"]
                  [garden "1.3.2"]
                  [cljsjs/d3 "3.5.7-1"]
-                 [secretary "1.2.3"]]
+                 [secretary "1.2.3"]
+                 [compojure "1.5.0"]]
 
   :min-lein-version "2.5.3"
 
@@ -27,18 +28,19 @@
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
 
   :figwheel {:nrepl-port 7888
+             :ring-handler re-frame-git.core/server
              :css-dirs ["resources/public/css"]}
 
   :garden {:builds [{:id "screen"
                      :source-paths ["src/clj"]
-                     :stylesheet re-frame-git.css/screen
+                     :stylesheet re-frame-git.styles.core/screen
                      :compiler {:output-to "resources/public/css/compiled/screen.css"
                                 :pretty-print? true}}]}
 
   :doo {:build "test"}
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/cljs"]
+                        :source-paths ["src"]
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
@@ -50,13 +52,13 @@
                                    :verbose true}}
 
                        {:id "test"
-                        :source-paths ["src/cljs" "test/cljs"]
+                        :source-paths ["src" "test"]
                         :compiler {:output-to "resources/public/js/compiled/test.js"
                                    :main re-frame-git.runner
                                    :optimizations :none}}
 
                        {:id "min"
-                        :source-paths ["src/cljs"]
+                        :source-paths ["src"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
                                    :optimizations :advanced
