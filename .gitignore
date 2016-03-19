@@ -7,3 +7,4 @@ out
 .nrepl-port
 .lein-repl-history
 figwheel_server.log
+_*/

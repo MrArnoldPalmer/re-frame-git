@@ -16,5 +16,5 @@ dev:
     - script:
       name: env
       code: env
-    -internal/watch:
-      code: lein figwheel dev & lein garden auto
+    - internal/watch:
+      code: lein garden auto & lein figwheel dev
