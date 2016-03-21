@@ -10,13 +10,20 @@
 
 (def graph {(with :Root generate-data) [:Hello :World]})
 
-(defroutes server
+(defn request-query
+  [request]
+  (-> request
+      (:body)
+      (slurp)
+      (read-string)))
+
+(defroutes handler
   (GET "/" _
     {:status 200
      :headers {"Content-Type" "text/html; charset=utf-8"}
      :body (io/input-stream (io/resource "public/index.html"))})
   (POST "/api" request
-    (println-str request)
-    {:status 200
-     :body (dispatch graph {:Root [:Hello :World]})}))
-
+    (let [data (dispatch graph (request-query request))]
+      (println data)
+      {:status 200
+       :body data})))
