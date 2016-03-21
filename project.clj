@@ -8,7 +8,8 @@
                  [cljsjs/d3 "3.5.7-1"]
                  [secretary "1.2.3"]
                  [metosin/reagent-dev-tools "0.1.0"]
-                 [compojure "1.5.0"]]
+                 [compojure "1.5.0"]
+                 [lockedon/graph-router "0.1.7"]]
 
   :min-lein-version "2.5.3"
 
@@ -37,6 +38,7 @@
 
   :figwheel {:nrepl-port 7888
              :ring-handler re-frame-git.server.core/server
+             :repl false
              :css-dirs ["resources/public/css"]}
 
   :garden {:builds [{:id "screen"
