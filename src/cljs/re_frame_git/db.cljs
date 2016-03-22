@@ -4,4 +4,4 @@
   {:repo-details {}
    :repo-languages {}
    :repo-tree {}
-   :posts []})
+   :posts-list []})

@@ -18,7 +18,7 @@
   (if config/debug?
     (reagent/render [:div
                      [main]
-                     [dev-tools/dev-tool]]
+                     [dev-tools/dev-tool {}]]
                     (.getElementById js/document "app"))
     (reagent/render [main]
                     (.getElementById js/document "app"))))
