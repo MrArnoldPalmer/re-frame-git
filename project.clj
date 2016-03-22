@@ -10,6 +10,7 @@
                  [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]
                  [ring "1.4.0"]
+                 [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.0.2"]
                  [prismatic/schema  "1.0.5"]
                  [lockedon/graph-router "0.1.7"]]
@@ -37,10 +38,10 @@
                        :aot :all
                        :omit-source true}}
 
-  :ring {:handler re-frame-git.server.core/server}
+  :ring {:handler re-frame-git.server.core/app}
 
   :figwheel {:nrepl-port 7888
-             :ring-handler re-frame-git.server.core/server
+             :ring-handler re-frame-git.server.core/app
              :repl false
              :css-dirs ["resources/public/css"]}
 

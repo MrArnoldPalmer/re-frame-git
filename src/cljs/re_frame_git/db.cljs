@@ -3,4 +3,5 @@
 (def default-db
   {:repo-details {}
    :repo-languages {}
-   :repo-tree {}})
+   :repo-tree {}
+   :posts []})

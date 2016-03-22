@@ -17,11 +17,13 @@
 (defn mount-root []
   (if config/debug?
     (reagent/render [:div
-                     [main]]
+                     [main]
+                     [dev-tools/dev-tool]]
                     (.getElementById js/document "app"))
     (reagent/render [main]
                     (.getElementById js/document "app"))))
 
 (defn ^:export init [] 
   (re-frame/dispatch-sync [:initialize-db])
+  (re-frame/dispatch [:get-posts])
   (mount-root))

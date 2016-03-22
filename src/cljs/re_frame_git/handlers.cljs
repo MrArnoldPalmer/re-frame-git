@@ -13,15 +13,25 @@
   [endpoint success-handler error-handler]
   (ajax/GET endpoint
             {:handler success-handler
-             :error-handler error-handler
-             :response-format :json
-             :keywords? true}))
+             :error-handler error-handler}))
+             ;:response-format :json
+             ;:keywords? true}))
 
 (defn api-error
   [db [_ response]]
   (println "An API error has occured")
   (println response)
   db)
+
+(defn get-posts
+  [db [_]]
+  (GET "/api/posts"
+       #(re-frame/dispatch [:process-posts-response %1])
+       #(re-frame/dispatch [:api-error %1])))
+
+(defn process-posts-response
+  [db [_ response]]
+  (assoc-in db [:posts-list] [response]))
 
 (defn get-repo
   [db [_ repo-name]]
@@ -77,6 +87,8 @@
   :initialize-db
   (fn [_ _]
     db/default-db))
+(re-frame/register-handler :get-posts get-posts)
+(re-frame/register-handler :process-posts-response process-posts-response)
 (re-frame/register-handler :api-error api-error)
 (re-frame/register-handler :get-repo get-repo)
 (re-frame/register-handler :process-repo-response process-repo-response)

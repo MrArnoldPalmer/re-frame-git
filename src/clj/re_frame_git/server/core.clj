@@ -3,6 +3,8 @@
             [compojure.core :refer :all]
             [compojure.route :refer [resources]]
             [graph-router.core :refer :all]
+            [ring.middleware.keyword-params :refer [wrap-keyword-params]]
+            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [re-frame-git.server.posts :refer [save-post get-posts get-post-by-id]]))
 
 (defn generate-data
@@ -14,14 +16,14 @@
 (defn request-body
   [request]
   (-> request
-      (:body)
-      (slurp)
-      (read-string)))
+      (:body)))
+      ;(slurp)
+      ;(read-string)))
 
 (defn generate-response
   [body]
   {:status 200
-   :headers {"Content-Type" "application/edn"}
+   :headers {"Content-Type" "application/json"}
    :body body})
 
 (defroutes server
@@ -35,10 +37,17 @@
         {:status 200
          :headers {"Content-Type" "application/edn"}
          :body data}))
-    (POST "/post" request
-      (let [post (request-body request)]
+    (POST "/posts" request
+      (let [post (:body request)]
+        (println post)
         (generate-response (save-post post))))
-    (GET "/post" _
+    (GET "/posts" _
       (generate-response (get-posts)))
-    (GET "/post/:id" [id]
+    (GET "/posts/:id" [id]
       (generate-response (get-post-by-id id)))))
+
+(defroutes app
+  (-> server
+      (wrap-keyword-params)
+      (wrap-json-body {:keywords? true})
+      (wrap-json-response)))

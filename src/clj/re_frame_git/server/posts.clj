@@ -17,7 +17,7 @@
   [post-map]
   (schema/validate schema
               post-map)
-  (mc/insert-and-return db "posts" (assoc post-map :_id (ObjectId.))))
+  (mc/insert-and-return db "posts" (assoc post-map :_id (str (ObjectId.)))))
 
 (defn get-posts
   "Get all posts in db"
@@ -26,5 +26,5 @@
 
 (defn get-post-by-id
   [id]
-  (println (mc/find-map-by-id db "posts" (ObjectId. id)))
-  (mc/find-map-by-id db "posts" (ObjectId. id)))
+  (println (mc/find-map-by-id db "posts" id))
+  (mc/find-map-by-id db "posts" id))
