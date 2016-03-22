@@ -10,6 +10,8 @@
                  [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]
                  [ring "1.4.0"]
+                 [com.novemberain/monger "3.0.2"]
+                 [prismatic/schema  "1.0.5"]
                  [lockedon/graph-router "0.1.7"]]
 
   :min-lein-version "2.5.3"
