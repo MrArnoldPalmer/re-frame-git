@@ -13,9 +13,9 @@
   [endpoint success-handler error-handler]
   (ajax/GET endpoint
             {:handler success-handler
-             :error-handler error-handler}))
-             ;:response-format :json
-             ;:keywords? true}))
+             :error-handler error-handler
+             :response-format :json
+             :keywords? true}))
 
 (defn api-error
   [db [_ response]]
@@ -31,7 +31,7 @@
 
 (defn process-posts-response
   [db [_ response]]
-  (assoc-in db [:posts-list] [response]))
+  (assoc-in db [:posts-list] response))
 
 (defn get-repo
   [db [_ repo-name]]
