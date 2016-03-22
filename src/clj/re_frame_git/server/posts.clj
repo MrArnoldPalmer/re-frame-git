@@ -26,5 +26,4 @@
 
 (defn get-post-by-id
   [id]
-  (println (mc/find-map-by-id db "posts" id))
   (mc/find-map-by-id db "posts" id))
