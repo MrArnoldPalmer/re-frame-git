@@ -3,10 +3,14 @@
               [re-frame.core :as re-frame]
               [re-frame-git.handlers]
               [re-frame-git.subs]
-              [re-frame-git.components.core :refer [main]]
+              [re-frame-git.containers.home :refer [home]]
               [re-frame-git.config :as config]
+              [goog.events :as events]
+              [goog.history.EventType :as EventType]
+              [secretary.core :as secretary :include-macros true]
               [reagent-dev-tools.core :as dev-tools]
-              [reagent-dev-tools.state-tree :as dev-state]))
+              [reagent-dev-tools.state-tree :as dev-state])
+    (:import goog.History))
 
 (when config/debug?
   (println "dev mode"))
@@ -17,11 +21,19 @@
 (defn mount-root []
   (if config/debug?
     (reagent/render [:div
-                     [main]
+                     [home]
                      [dev-tools/dev-tool {}]]
                     (.getElementById js/document "app"))
-    (reagent/render [main]
+    (reagent/render [home]
                     (.getElementById js/document "app"))))
+
+(defn hook-browser-navigation! []
+  (doto (History.)
+    (events/listen
+     EventType/NAVIGATE
+     (fn [event]
+       (secretary/dispatch! (.-token event))))
+    (.setEnabled true)))
 
 (defn ^:export init [] 
   (re-frame/dispatch-sync [:initialize-db])
