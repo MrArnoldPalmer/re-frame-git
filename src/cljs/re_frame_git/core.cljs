@@ -33,6 +33,9 @@
 (secretary/defroute repositories-route "/repositories" []
   (re-frame/dispatch [:set-current-route "repositories"]))
 
+(secretary/defroute posts-route "/posts" []
+  (re-frame/dispatch [:set-current-route "posts"]))
+
 (defn hook-browser-navigation! []
   (doto (History.)
     (events/listen
