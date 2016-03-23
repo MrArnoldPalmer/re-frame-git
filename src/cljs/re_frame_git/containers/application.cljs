@@ -7,11 +7,12 @@
 (defn current-component
   [current-route]
   (cond
-    (= current-route "home") home
-    (= current-route "repositories") repositories))
+    (= current-route "home") [home]
+    (= current-route "repositories") [repositories]
+    :else nil))
 
 (defn application []
   (let [current-route (re-frame/subscribe [:current-route])]
     [:div
      [nav-bar]
-     [(current-component @current-route)]]))
+     (current-component @current-route)]))
