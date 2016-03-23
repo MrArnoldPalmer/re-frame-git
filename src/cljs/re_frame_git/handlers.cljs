@@ -3,6 +3,10 @@
               [re-frame-git.db :as db]
               [ajax.core :as ajax]))
 
+(defn set-current-route
+  [db [_ route]]
+  (assoc-in db [:current-route] route))
+
 (defn build-api-url
   "Builds an api url using base github api url and endpoint path as argument"
   [endpoint]
@@ -88,6 +92,7 @@
   :initialize-db
   (fn [_ _]
     db/default-db))
+(re-frame/register-handler :set-current-route set-current-route)
 (re-frame/register-handler :get-posts get-posts)
 (re-frame/register-handler :process-posts-response process-posts-response)
 (re-frame/register-handler :api-error api-error)

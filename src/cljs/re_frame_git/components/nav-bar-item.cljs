@@ -3,5 +3,5 @@
 
 (defn nav-bar-item
   [text url]
-  [:a {:href url}
+  [:a {:href "#/repositories"}
    text])

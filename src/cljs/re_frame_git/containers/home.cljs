@@ -1,7 +1,6 @@
 (ns re-frame-git.containers.home
-  (:require [re-frame.core :as re-frame]
-            [re-frame-git.components.nav-bar :refer [nav-bar]]))
+  (:require [reagent.core :as reagent]))
 
-(defn home []
-  [:div
-   [nav-bar]])
+(defn home
+  []
+  [:p "Home"])
