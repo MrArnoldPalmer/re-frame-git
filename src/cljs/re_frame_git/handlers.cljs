@@ -38,9 +38,20 @@
   [db [_ response]]
   (assoc-in db [:posts-list] response))
 
+(defn get-repo-list
+  [db [_ username]]
+  (GET (str "/github/repositories/" username)
+       #(re-frame/dispatch [:process-repo-list-response %1])
+       #(re-frame/dispatch [:api-error %1]))
+  (assoc-in db [:github-username] username))
+
+(defn process-repo-list-response
+  [db [_ response]]
+  (assoc-in db [:repo-list] response))
+
 (defn get-repo
-  [db [_ repo-name]]
-  (GET (build-api-url (str "/repos/" repo-name))
+  [db [_ username repo-name]]
+  (GET (str "/github/repository/" username "/" repo-name)
        #(re-frame/dispatch [:process-repo-response repo-name %1])
        #(re-frame/dispatch [:api-error %1]))
   db)
@@ -94,6 +105,8 @@
     db/default-db))
 (re-frame/register-handler :set-current-route set-current-route)
 (re-frame/register-handler :get-posts get-posts)
+(re-frame/register-handler :get-repo-list get-repo-list)
+(re-frame/register-handler :process-repo-list-response process-repo-list-response)
 (re-frame/register-handler :process-posts-response process-posts-response)
 (re-frame/register-handler :api-error api-error)
 (re-frame/register-handler :get-repo get-repo)

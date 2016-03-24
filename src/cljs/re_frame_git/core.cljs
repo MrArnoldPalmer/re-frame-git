@@ -30,8 +30,9 @@
 (secretary/defroute home-route "/" []
   (re-frame/dispatch [:set-current-route "home"]))
 
-(secretary/defroute repositories-route "/repositories" []
-  (re-frame/dispatch [:set-current-route "repositories"]))
+(secretary/defroute repositories-route "/repositories/:username" [username]
+  (re-frame/dispatch [:set-current-route "repositories"])
+  (re-frame/dispatch [:get-repo-list username]))
 
 (secretary/defroute posts-route "/posts" []
   (re-frame/dispatch [:set-current-route "posts"]))

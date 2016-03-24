@@ -5,4 +5,5 @@
    :repo-details {}
    :repo-languages {}
    :repo-tree {}
-   :posts-list []})
+   :posts-list []
+   :github-username nil})
