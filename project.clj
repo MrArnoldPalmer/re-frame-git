@@ -3,7 +3,6 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0-alpha-3"]
-                 [cljs-ajax "0.5.3"]
                  [cljs-http "0.1.39"]
                  [garden "1.3.2"]
                  [cljsjs/d3 "3.5.7-1"]

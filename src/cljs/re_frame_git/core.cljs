@@ -1,7 +1,7 @@
 (ns re-frame-git.core
     (:require [reagent.core :as reagent]
               [re-frame.core :as re-frame]
-              [re-frame-git.handlers]
+              [re-frame-git.handlers.core]
               [re-frame-git.subs]
               [re-frame-git.containers.application :refer [application]]
               [re-frame-git.config :as config]
