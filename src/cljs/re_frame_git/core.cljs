@@ -5,12 +5,9 @@
               [re-frame-git.subs]
               [re-frame-git.containers.application :refer [application]]
               [re-frame-git.config :as config]
-              [goog.events :as events]
-              [goog.history.EventType :as EventType]
-              [secretary.core :as secretary]
+              [re-frame-git.routes :refer [hook-browser-navigation!]]
               [reagent-dev-tools.core :as dev-tools]
-              [reagent-dev-tools.state-tree :as dev-state])
-    (:import goog.History))
+              [reagent-dev-tools.state-tree :as dev-state]))
 
 (when config/debug?
   (println "dev mode"))
@@ -26,24 +23,6 @@
                     (.getElementById js/document "app"))
     (reagent/render [application]
                     (.getElementById js/document "app"))))
-
-(secretary/defroute home-route "/" []
-  (re-frame/dispatch [:set-current-route "home"]))
-
-(secretary/defroute repositories-route "/repositories/:username" [username]
-  (re-frame/dispatch [:set-current-route "repositories"])
-  (re-frame/dispatch [:get-repo-list username]))
-
-(secretary/defroute posts-route "/posts" []
-  (re-frame/dispatch [:set-current-route "posts"]))
-
-(defn hook-browser-navigation! []
-  (doto (History.)
-    (events/listen
-     EventType/NAVIGATE
-     (fn [event]
-       (secretary/dispatch! (.-token event))))
-    (.setEnabled true)))
 
 (defn ^:export init [] 
   (hook-browser-navigation!)

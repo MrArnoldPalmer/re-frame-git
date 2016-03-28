@@ -3,6 +3,11 @@
     (:require [re-frame.core :as re-frame]))
 
 (re-frame/register-sub
+  :repo-list
+  (fn [db]
+    (reaction (:repo-list @db))))
+
+(re-frame/register-sub
   :current-route
   (fn [db]
     (reaction (:current-route @db))))
