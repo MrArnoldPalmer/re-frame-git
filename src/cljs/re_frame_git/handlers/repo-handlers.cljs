@@ -7,8 +7,8 @@
   [db [_ username]]
   (GET (str "/api/github/repositories/" username)
        #(re-frame/dispatch [:process-repo-list-response %1])
-       #(re-frame/dispatch [:api-error %1]))
-  (assoc-in db [:github-username] username))
+       #(re-frame/dispatch [:api-error %1])) 
+  db)
 
 (defn process-repo-list-response
   [db [_ response]]

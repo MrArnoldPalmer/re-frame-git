@@ -6,4 +6,5 @@
    :repo-languages {}
    :repo-tree {}
    :posts-list []
+   :repo-list []
    :github-username "mrarnoldpalmer"})

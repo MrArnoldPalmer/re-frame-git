@@ -3,6 +3,7 @@
 
 (defn repo-list
   [repo-list]
-  (map (fn [repo]
+  [:div
+   (map (fn [repo]
          [:h1 (:name repo)])
-       repo-list))
+       repo-list)])

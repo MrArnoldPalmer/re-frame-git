@@ -1,6 +1,7 @@
 (ns re-frame-git.components.nav-bar
-  (:require [reagent.core :as reagent]
-            [re-frame-git.components.nav-bar-item :refer [nav-bar-item]]))
+  (:require [re-frame.core :as re-frame]
+            [re-frame-git.components.nav-bar-item :refer [nav-bar-item]]
+            [re-frame-git.routes :refer [home-route repositories-route]]))
 
 (def container-style
   {:display "flex"
@@ -8,6 +9,9 @@
 
 (defn nav-bar
   []
-  [:div {:style container-style}
-   [nav-bar-item "repositories" "/repositories"]
-   [nav-bar-item "test2" "/"]])
+  (let [github-username (re-frame/subscribe [:github-username])]
+    (println @github-username)
+    [:div {:style container-style}
+     [nav-bar-item "home" (home-route)]
+     [nav-bar-item "repositories" (repositories-route {:github-username @github-username})]
+     [nav-bar-item "blog" "/#"]]))

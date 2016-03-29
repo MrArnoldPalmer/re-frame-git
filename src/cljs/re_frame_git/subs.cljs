@@ -13,6 +13,11 @@
     (reaction (:current-route @db))))
 
 (re-frame/register-sub
+  :github-username
+  (fn [db]
+    (reaction (:github-username @db))))
+
+(re-frame/register-sub
   :repo-details
   (fn [db]
     (reaction (:repo-details @db))))

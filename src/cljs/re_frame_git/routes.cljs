@@ -10,9 +10,9 @@
 (secretary/defroute home-route "/" []
   (re-frame/dispatch [:set-current-route "home"]))
 
-(secretary/defroute repositories-route "/repositories/:username" [username]
+(secretary/defroute repositories-route "/repositories/:github-username" [github-username]
   (re-frame/dispatch [:set-current-route "repositories"])
-  (re-frame/dispatch [:get-repo-list username]))
+  (re-frame/dispatch [:get-repo-list github-username]))
 
 (secretary/defroute posts-route "/posts" []
   (re-frame/dispatch [:set-current-route "posts"]))
