@@ -3,6 +3,18 @@
             [re-frame-git.handlers.repo-handlers :as handlers]
             [re-frame-git.test-utils :refer [mock-ajax-success]]))
 
+(deftest get-repo-list
+  (testing "returns map as passed in"
+    (let [db {:test "test"}
+          result (handlers/get-repo-list db [_ _])]
+      (is (= result db)))))
+
+(deftest process-repo-list-response
+  (testing "returns map with response maps associated with :repo-list in map parameter"
+    (let [repo-list "repo-list"
+          db (handlers/process-repo-list-response {} [_ repo-list])]
+      (is (= (:repo-list db) repo-list)))))
+
 (deftest get-repo
   (testing "returns map as passed in"
     (let [db {:test "test"}
@@ -35,9 +47,8 @@
 
 (deftest process-repo-branches-response
   (testing "returns map with response maps associated with :repo-branches in map parameter"
-    (let [repo-branches "repo-branches"
-          db (handlers/process-repo-branches-response {[:name "master" :commit {:sha "thing"}]} [_ _ repo-branches])]
-      (println db)
+    (let [repo-branches [{:name "master" :commit {:sha "sha-string"}}]
+          db (handlers/process-repo-branches-response {} [_ _ repo-branches])]
       (is (= (:repo-branches db) repo-branches)))))
 
 (deftest get-repo-tree
