@@ -1,33 +1,7 @@
-(ns re-frame-git.handlers-test
+(ns re-frame-git.handlers.repo-handlers-test
   (:require [cljs.test :refer-macros [deftest testing is]]
-            [re-frame-git.handlers :as handlers]
-            [ajax.core :as ajax]
+            [re-frame-git.handlers.repo-handlers :as handlers]
             [re-frame-git.test-utils :refer [mock-ajax-success]]))
-
-(deftest build-api-url
-  (testing "returns an api endpoint url based on the parameter string argument"
-    (let [url (handlers/build-api-url "/endpoint")]
-      (is (= (str "https://api.github.com" "/endpoint") url)))))
-
-(deftest GET
-  (testing "makes an http GET request to URL passed in using core.ajax"
-    (with-redefs [ajax/GET #(mock-ajax-success [%1 %2])]
-      (let [url "test-url"
-            handler "success-function"
-            error "error-function"
-            response (handlers/GET url handler error)]
-        (is (= (:status response) 200))
-        (is (= (get-in response [:options 0]) url))
-        (is (= (get-in response [:options 1 :handler]) handler))
-        (is (= (get-in response [:options 1 :error-handler]) error))
-        (is (= (get-in response [:options 1 :response-format]) :json))
-        (is (= (get-in response [:options 1 :keywords?]) true))))))
-
-(deftest api-error
-  (testing "prints error to console, returns map parameter as passed in"
-    (let [db {:test "test"}
-          result (handlers/api-error db [_ "response"])]
-      (is (= result db)))))
 
 (deftest get-repo
   (testing "returns map as passed in"
@@ -62,7 +36,8 @@
 (deftest process-repo-branches-response
   (testing "returns map with response maps associated with :repo-branches in map parameter"
     (let [repo-branches "repo-branches"
-          db (handlers/process-repo-branches-response {} [_ _ repo-branches])]
+          db (handlers/process-repo-branches-response {[:name "master" :commit {:sha "thing"}]} [_ _ repo-branches])]
+      (println db)
       (is (= (:repo-branches db) repo-branches)))))
 
 (deftest get-repo-tree

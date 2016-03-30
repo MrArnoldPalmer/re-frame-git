@@ -67,7 +67,7 @@
                                    :verbose true}}
 
                        {:id "test"
-                        :source-paths ["src/cljs" "src/clj"]
+                        :source-paths ["src/cljs" "src/clj" "test/cljs"]
                         :compiler {:output-to "resources/public/js/compiled/test.js"
                                    :main re-frame-git.runner
                                    :optimizations :none}}
