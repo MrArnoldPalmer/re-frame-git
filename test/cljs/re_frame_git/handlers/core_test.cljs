@@ -2,6 +2,12 @@
   (:require [cljs.test :refer-macros [deftest testing is]]
             [re-frame-git.handlers.core :as handlers]))
 
+(deftest set-current-route
+  (testing "sets :current-route key in app state to route string parameter"
+    (let [route-name "route-string"
+          result (handlers/set-current-route {} [_ route-name])]
+      (is (= (:current-route db) route-name)))))
+
 (deftest api-error
   (testing "prints error to console, returns map parameter as passed in"
     (let [db {:test "test"}
