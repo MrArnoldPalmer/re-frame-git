@@ -1,17 +1,16 @@
 (ns re-frame-git.components.nav-bar
   (:require [re-frame.core :as re-frame]
+            [re-com.core :refer [h-box gap]]
             [re-frame-git.components.nav-bar-item :refer [nav-bar-item]]
             [re-frame-git.routes :refer [home-route repositories-route]]))
-
-(def container-style
-  {:display "flex"
-   :flex-direction "row"})
 
 (defn nav-bar
   []
   (let [github-username (re-frame/subscribe [:github-username])]
-    (println @github-username)
-    [:div {:style container-style}
-     [nav-bar-item "home" (home-route)]
-     [nav-bar-item "repositories" (repositories-route {:github-username @github-username})]
-     [nav-bar-item "blog" "/#"]]))
+   [h-box
+    :width "100%"
+    :children [[nav-bar-item "home" (home-route)]
+               [gap :size "1"]
+               [nav-bar-item "repositories" (repositories-route {:github-username @github-username})]
+               [gap :size "1"]
+               [nav-bar-item "blog" "/#"]]]))

@@ -5,5 +5,7 @@
   [repo-list]
   [:div
    (map (fn [repo]
-         [:h1 (:name repo)])
+         [:h1
+          {:key (:full_name repo)}
+          (:name repo)])
        repo-list)])
