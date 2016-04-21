@@ -2,7 +2,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.7.228"]
                  [reagent "0.6.0-alpha"]
-                 [re-frame "0.7.0-alpha-3"]
+                 [re-frame "0.7.0"]
                  [re-com "0.8.0"]
                  [cljs-http "0.1.39"]
                  [garden "1.3.2"]
