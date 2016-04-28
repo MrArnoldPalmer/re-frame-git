@@ -1,0 +1,14 @@
+re-frame-git:
+  build: .
+  ports:
+    - "3449:3449"
+  volumes:
+    - .:/re-frame-git
+  links:
+    - mongo
+  environment:
+    - DATABASE_URL=mongodb://mongo:27017/local
+mongo:
+  image: mongo
+  ports:
+    - "27017"

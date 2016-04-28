@@ -3,7 +3,7 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0"]
-                 [re-com "0.8.0"]
+                 [re-com "0.8.1"]
                  [cljs-http "0.1.39"]
                  [garden "1.3.2"]
                  [cljsjs/d3 "3.5.7-1"]
@@ -21,8 +21,8 @@
 
   :source-paths ["src/clj" "src/cljs"]
 
-  :plugins [[lein-cljsbuild "1.1.2"]
-            [lein-figwheel "0.5.0-6"]
+  :plugins [[lein-cljsbuild "1.1.3"]
+            [lein-figwheel "0.5.2"]
             [lein-garden "0.2.6"]
             [lein-doo "0.1.6"]
             [lein-ring "0.9.7"]]
