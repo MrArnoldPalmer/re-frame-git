@@ -6,7 +6,7 @@
   (testing "sets :current-route key in app state to route string parameter"
     (let [route-name "route-string"
           result (handlers/set-current-route {} [_ route-name])]
-      (is (= (:current-route db) route-name)))))
+      (is (= (:current-route result) route-name)))))
 
 (deftest api-error
   (testing "prints error to console, returns map parameter as passed in"
