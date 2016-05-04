@@ -1,4 +1,5 @@
 FROM clojure
 ADD . /re-frame-git
 WORKDIR /re-frame-git
-RUN lein figwheel dev
+RUN lein deps
+CMD lein figwheel dev

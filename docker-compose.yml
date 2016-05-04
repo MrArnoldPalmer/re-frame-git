@@ -11,4 +11,4 @@ re-frame-git:
 mongo:
   image: mongo
   ports:
-    - "27017"
+    - "27017:27017"
