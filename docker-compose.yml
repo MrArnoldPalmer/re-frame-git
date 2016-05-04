@@ -8,6 +8,7 @@ re-frame-git:
     - mongo
   environment:
     - DATABASE_URL=mongodb://mongo:27017/local
+  env_file: .env
 mongo:
   image: mongo
   ports:

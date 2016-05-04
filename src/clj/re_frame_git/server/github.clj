@@ -10,7 +10,8 @@
 (defn github-api-request
   "Make a request to github api to endpoint arg"
   [endpoint]
-  (:body (client/get (str "https://api.github.com/" endpoint))))
+  (:body (client/get (str "https://api.github.com/" endpoint)
+           {:headers {:Authorization (str "token " (System/getenv "GITHUB_AUTH"))}})))
 
 (defn get-repositories
   [username]
