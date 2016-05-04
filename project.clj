@@ -14,8 +14,7 @@
                  [ring "1.4.0"]
                  [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.0.2"]
-                 [prismatic/schema  "1.0.5"]
-                 [lockedon/graph-router "0.1.7"]]
+                 [prismatic/schema  "1.0.5"]]
 
   :min-lein-version "2.5.3"
 
