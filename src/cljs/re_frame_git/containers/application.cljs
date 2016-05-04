@@ -3,13 +3,15 @@
             [re-com.core :refer [v-box]]
             [re-frame-git.components.nav-bar :refer [nav-bar]]
             [re-frame-git.containers.repositories :refer [repositories]]
-            [re-frame-git.containers.home :refer [home]]))
+            [re-frame-git.containers.home :refer [home]]
+            [re-frame-git.components.repo-details :refer [repo-details]]))
 
 (defn current-component
   [current-route]
   (cond
     (= current-route "home") [home]
     (= current-route "repositories") [repositories]
+    (= current-route "repo-details") [repo-details]
     :else nil))
 
 (defn application []

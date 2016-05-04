@@ -5,7 +5,12 @@
 (defn build-api-url
   "Builds an api url using base github api url and endpoint path as argument"
   [endpoint]
-  (str "https://api.github.com" endpoint))
+  (str "https://api.github.com/" endpoint))
+
+(defn github-api-request
+  "Make a request to github api to endpoint arg"
+  [endpoint]
+  (:body (client/get (str "https://api.github.com/" endpoint))))
 
 (defn get-repositories
   [username]

@@ -8,5 +8,4 @@
   (let [repo (re-frame/subscribe [:repo-details])]
     [:div
      (:full_name @repo)
-     [get-repo/main]
      [file-tree-graph-container]]))

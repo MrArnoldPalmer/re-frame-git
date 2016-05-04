@@ -5,7 +5,7 @@
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [re-frame-git.server.posts :refer [save-post get-posts get-post-by-id]]
-            [re-frame-git.server.github :refer [get-repositories get-repository-details]]))
+            [re-frame-git.server.github :refer [get-repositories get-repository-details github-api-request]]))
 
 (defn generate-response
   [body]
@@ -27,10 +27,8 @@
       (generate-response (get-posts)))
     (GET "/posts/:id" [id]
       (generate-response (get-post-by-id id)))
-    (GET "/github/repositories/:username" [username]
-      (generate-response (get-repositories username)))
-    (GET "/github/repository/:username/:repo-name" [username repo-name]
-      (generate-response (get-repository-details username repo-name)))))
+    (GET "/github/*" {{params :*} :params}
+      (generate-response (github-api-request params)))))
 
 (defroutes app
   (-> server
