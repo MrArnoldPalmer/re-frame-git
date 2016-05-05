@@ -9,7 +9,8 @@
          [:a
           {:href (repo-details-route
                    {:github-username (get-in repo [:owner :login])
-                    :repo-name (:name repo)})}
+                    :repo-name (:name repo)})
+           :key (:full_name repo)}
           [:h1
            {:key (:full_name repo)}
            (:name repo)]])

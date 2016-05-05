@@ -27,8 +27,10 @@
       (generate-response (get-posts)))
     (GET "/posts/:id" [id]
       (generate-response (get-post-by-id id)))
-    (GET "/github/*" {{params :*} :params}
-      (generate-response (github-api-request params)))))
+    (GET "/github/*" request
+      (let [query-string (:query-string request)
+            endpoint (str (get-in request [:params :*]) (if query-string (str "?" query-string) nil))]
+        (generate-response (github-api-request endpoint))))))
 
 (defroutes app
   (-> server
