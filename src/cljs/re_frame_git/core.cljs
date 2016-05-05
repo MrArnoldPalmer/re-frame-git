@@ -3,7 +3,7 @@
               [re-frame.core :as re-frame]
               [re-frame-git.handlers.core]
               [re-frame-git.subs]
-              [re-frame-git.containers.application :refer [application]]
+              [re-frame-git.components.application :refer [application]]
               [re-frame-git.config :as config]
               [re-frame-git.routes :refer [hook-browser-navigation!]]
               [reagent-dev-tools.core :as dev-tools]

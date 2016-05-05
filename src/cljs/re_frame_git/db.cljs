@@ -2,9 +2,15 @@
 
 (def default-db
   {:current-route ""
-   :repo-details {}
+   :current-repo {:loading false
+                  :items nil}
+   :repo-details []
    :repo-languages {}
-   :repo-tree {}
-   :posts-list []
-   :repo-list []
+   :repo-tree {:loading false
+               :items nil}
+   :posts-list {:loading false
+                :items []}
+   :repo-list {:loading false
+               :items []
+               :github-username nil}
    :github-username "mrarnoldpalmer"})

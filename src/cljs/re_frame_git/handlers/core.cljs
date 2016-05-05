@@ -1,9 +1,6 @@
 (ns re-frame-git.handlers.core
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [re-frame.core :as re-frame]
             [re-frame-git.db :as db]
-            [cljs.core.async :refer [<!]]
-            [cljs-http.client :as client]
             [re-frame-git.handlers.repo-handlers :as repo-handlers]
             [re-frame-git.handlers.post-handlers :as post-handlers]))
 
@@ -12,10 +9,10 @@
   (assoc-in db [:current-route] route))
 
 (defn api-error
-  [db [_ response]]
+  [db [_ response loading-flag-vector]]
   (println "An API error has occured")
   (println (:error-text response))
-  db)
+  (assoc-in db loading-flag-vector false))
 
 (re-frame/register-handler
   :initialize-db

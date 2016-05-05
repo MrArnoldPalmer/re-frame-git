@@ -2,6 +2,7 @@ re-frame-git:
   build: .
   ports:
     - "3449:3449"
+    - "7888:7888"
   volumes:
     - .:/re-frame-git
   links:
@@ -12,4 +13,4 @@ re-frame-git:
 mongo:
   image: mongo
   ports:
-    - "27017:27017"
+    - "27017"

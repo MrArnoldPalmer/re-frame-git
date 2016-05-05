@@ -14,5 +14,4 @@
           [:h1
            {:key (:full_name repo)}
            (:name repo)]])
-       repo-list
        repo-list)])

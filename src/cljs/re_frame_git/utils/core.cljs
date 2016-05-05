@@ -1,4 +1,4 @@
-(ns re-frame-git.helpers
+(ns re-frame-git.utils.core
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :refer [<!]]
             [cljs-http.client :as client]))
