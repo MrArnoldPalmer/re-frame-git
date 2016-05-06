@@ -12,7 +12,7 @@
 
 (secretary/defroute repositories-route "/repositories/:github-username" [github-username]
   (re-frame/dispatch [:set-current-route "repositories"])
-  (re-frame/dispatch [:get-repo-list github-username]))
+  (re-frame/dispatch [:set-repo-list github-username]))
 
 (secretary/defroute
   repo-details-route

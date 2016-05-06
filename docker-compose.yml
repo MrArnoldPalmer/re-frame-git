@@ -7,8 +7,6 @@ re-frame-git:
     - .:/re-frame-git
   links:
     - mongo
-  environment:
-    - DATABASE_URL=mongodb://mongo:27017/local
   env_file: .env
 mongo:
   image: mongo
