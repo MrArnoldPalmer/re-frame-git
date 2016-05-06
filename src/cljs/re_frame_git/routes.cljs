@@ -19,7 +19,7 @@
   "/repositories/:github-username/:repo-name"
   [github-username repo-name]
   (re-frame/dispatch [:set-current-route "repo-details"])
-  (re-frame/dispatch [:get-repo github-username repo-name]))
+  (re-frame/dispatch [:set-current-repo github-username repo-name]))
 
 (secretary/defroute posts-route "/posts" []
   (re-frame/dispatch [:set-current-route "posts"]))

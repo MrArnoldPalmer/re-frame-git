@@ -32,6 +32,7 @@
 (register-handler :process-repo-list-response repo-handlers/process-repo-list-response)
 (register-handler :process-posts-response post-handlers/process-posts-response)
 (register-handler :api-error api-error)
+(register-handler :set-current-repo repo-handlers/set-current-repo)
 (register-handler :get-repo repo-handlers/get-repo)
 (register-handler :process-repo-response repo-handlers/process-repo-response)
 (register-handler :get-repo-languages repo-handlers/get-repo-languages)

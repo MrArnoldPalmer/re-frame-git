@@ -3,8 +3,10 @@
 (def default-db
   {:current-route ""
    :current-repo {:loading false
-                  :items nil}
-   :repo-details []
+                  :details nil
+                  :tree nil
+                  :languages nil}
+   :repo-details {}
    :repo-languages {}
    :repo-tree {:loading false
                :items nil}
