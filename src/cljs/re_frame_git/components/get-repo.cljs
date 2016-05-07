@@ -1,5 +1,5 @@
 (ns re-frame-git.components.get-repo
-    (:require [re-frame.core :as re-frame]))
+    (:require [re-frame.core :as re-frame :refer [dispatch]]))
 
 (defn main []
   (fn []
@@ -7,5 +7,5 @@
       [:div
         [:input {:type "text"
                  :on-change #(reset! repo-name (-> % .-target .-value))}]
-        [:button {:on-click #(re-frame/dispatch [:get-repo @repo-name])}
+        [:button {:on-click #(dispatch [:get-repo @repo-name])}
          "Get Repo"]])))

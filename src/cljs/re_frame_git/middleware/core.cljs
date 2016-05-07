@@ -2,7 +2,7 @@
   (:require [re-frame.core :refer [dispatch]]
             [re-frame-git.utils.core :refer [build-repo-keyword item-loaded]]))
 
-(defn repo-is-loaded
+(defn repo-loaded
   [handler]
   (fn is-loaded-handler
     [db args]
@@ -12,13 +12,6 @@
           repo-state
           (get-in new-db [:repo-details
                           (build-repo-keyword username repo-name)])]
-      (println (item-loaded repo-state))
       (if (item-loaded repo-state)
-        (println "loaded: " repo-state)
-        (println "not loaded: " repo-state))
+        (dispatch [:set-current-repo username repo-name]))
       new-db)))
-
-(defn load-repo
-  [username repo-name]
-  (dispatch [:get-repo username repo-name])
-  (dispatch [:get-repo-branches username repo-name]))
