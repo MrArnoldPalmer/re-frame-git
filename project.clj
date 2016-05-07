@@ -1,20 +1,20 @@
 (defproject re-frame-git "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.7.228"]
+                 [org.clojure/clojurescript "1.8.51"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0"]
-                 [re-com "0.8.1"]
-                 [cljs-http "0.1.39"]
+                 [re-com "0.8.3"]
+                 [cljs-http "0.1.40"]
                  [garden "1.3.2"]
-                 [cljsjs/d3 "3.5.7-1"]
+                 [cljsjs/d3 "3.5.16-0"]
                  [secretary "1.2.3"]
                  [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]
-                 [clj-http "2.1.0"]
+                 [clj-http "3.0.1"]
                  [ring "1.4.0"]
                  [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.0.2"]
-                 [prismatic/schema  "1.0.5"]]
+                 [prismatic/schema  "1.1.1"]]
 
   :min-lein-version "2.5.3"
 
@@ -31,7 +31,7 @@
                                     "resources/public/css/compiled"]
 
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.10"]]
+                                  [org.clojure/tools.nrepl "0.2.12"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
                        :prep-tasks ["compile" ["cljsbuild" "once"]]

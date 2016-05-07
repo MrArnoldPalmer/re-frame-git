@@ -14,7 +14,7 @@
 
 (defn item-loaded
   [item-details]
-  (empty? (filter #(nil? (get 1 %)) item-details)))
+  (empty? (filter #(nil? (get % 1)) item-details)))
 
 (defn build-repo-keyword
   [username repo-name]

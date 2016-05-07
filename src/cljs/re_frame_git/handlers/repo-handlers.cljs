@@ -39,7 +39,11 @@
       (do
         (re-frame/dispatch [:get-repo username repo-name])
         (re-frame/dispatch [:get-repo-branches username repo-name])
-        (assoc-in db [:current-repo] {:loading true :tree nil :details nil :branches nil})))))
+        (-> db
+            (assoc-in
+              [:repo-details repo-keyword] {:tree nil :details nil :branches nil})
+            (assoc-in
+              [:current-repo] {:loading true :tree nil :details nil :branches nil}))))))
 
 (defn get-repo
   [db [username repo-name]]
