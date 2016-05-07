@@ -41,8 +41,7 @@
 
   :ring {:handler re-frame-git.server.core/app}
 
-  :figwheel {:nrepl-port 7888
-             :ring-handler re-frame-git.server.core/app
+  :figwheel {:ring-handler re-frame-git.server.core/app
              :repl false
              :css-dirs ["resources/public/css"]}
 
