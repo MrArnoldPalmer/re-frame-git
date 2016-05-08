@@ -1,6 +1,5 @@
 (ns re-frame-git.components.file-tree-graph-container
   (:require [clojure.string :refer [split]]
-            [re-frame.core :as re-frame]
             [re-frame-git.components.tree-map :refer [tree-map]]))
 
 (defn format-item
@@ -35,8 +34,7 @@
           {:name "root" :children []}
           (:tree tree-graph-data)))
 
-(defn file-tree-graph-container []
-  (let [tree (re-frame/subscribe [:repo-tree])]
-    (if (not (empty? @tree))
-      [:div
-       [tree-map (format-file-tree-data @tree)]])))
+(defn file-tree-graph-container
+  [tree-data]
+  [:div
+   [tree-map (format-file-tree-data tree-data)]])

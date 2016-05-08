@@ -1,4 +1,4 @@
-(ns re-frame-git.components.application
+(ns re-frame-git.components.application-container
   (:require [re-frame.core :refer [subscribe]]
             [re-com.core :refer [v-box]]
             [re-frame-git.components.nav-bar :refer [nav-bar]]
@@ -14,7 +14,7 @@
     (= current-route "repo-details") [repo-details-container]
     :else nil))
 
-(defn application []
+(defn application-container []
   (let [current-route (subscribe [:current-route])]
     [v-box
      :children [[nav-bar]

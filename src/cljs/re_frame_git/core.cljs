@@ -1,31 +1,31 @@
 (ns re-frame-git.core
-    (:require [reagent.core :as reagent]
-              [re-frame.core :as re-frame]
+    (:require [reagent.core :as reagent :refer [render]]
+              [re-frame.core :as re-frame :refer [dispatch dispatch-sync]]
               [re-frame-git.handlers.core]
               [re-frame-git.subs]
-              [re-frame-git.components.application :refer [application]]
-              [re-frame-git.config :as config]
+              [re-frame-git.components.application-container :refer [application-container]]
+              [re-frame-git.config :refer [debug?]]
               [re-frame-git.routes :refer [hook-browser-navigation!]]
               [reagent-dev-tools.core :as dev-tools]
               [reagent-dev-tools.state-tree :as dev-state]))
 
-(when config/debug?
+(when debug?
   (println "dev mode"))
 
-(when config/debug?
+(when debug?
   (dev-state/register-state-atom "App" re-frame.db/app-db))
 
 (defn mount-root []
-  (if config/debug?
-    (reagent/render [:div
-                     [application]
-                     [dev-tools/dev-tool {}]]
-                    (.getElementById js/document "app"))
-    (reagent/render [application]
-                    (.getElementById js/document "app"))))
+  (if debug?
+    (render [:div
+             [application-container]
+             [dev-tools/dev-tool {}]]
+            (.getElementById js/document "app"))
+    (render [application-container]
+            (.getElementById js/document "app"))))
 
 (defn ^:export init [] 
   (hook-browser-navigation!)
-  (re-frame/dispatch-sync [:initialize-db])
-  (re-frame/dispatch [:get-posts])
+  (dispatch-sync [:initialize-db])
+  (dispatch [:get-posts])
   (mount-root))
