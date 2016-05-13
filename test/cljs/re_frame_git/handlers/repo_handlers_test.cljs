@@ -3,15 +3,22 @@
             [re-frame-git.handlers.repo-handlers :as handlers]
             [re-frame-git.test-utils :refer [mock-ajax-success]]
             [re-frame-git.utils.core :refer [build-repo-keyword]]))
+
 (def test-username "username")
 (def test-repo-name "repo-name")
 (def test-repo-keyword
   (build-repo-keyword test-username test-repo-name))
 
+(deftest set-repo-list
+  (testing "checks if repo-list for user is currnet returns db"
+    (let [db {:repo-list {:github-username test-username :items ["item"]}};}])))
+          result (handlers/set-repo-list db test-username)]
+      (is (= result db)))))
+
 (deftest get-repo-list
   (testing "returns map as passed in"
     (let [db {:test "test"}
-          result (handlers/get-repo-list db [_ _])]
+          result (handlers/get-repo-list db [])]
       (is (= result (assoc db :repo-list {:loading true}))))))
 
 (deftest process-repo-list-response
@@ -23,7 +30,7 @@
 (deftest get-repo
   (testing "returns map as passed in"
     (let [db {:test "test"}
-          result (handlers/get-repo db [_ _])]
+          result (handlers/get-repo db [])]
       (is (= result db)))))
 
 (deftest process-repo-response
@@ -35,7 +42,7 @@
 (deftest get-repo-languages
   (testing "returns map as passed in"
     (let [db {:test "test"}
-          result (handlers/get-repo-languages db [_ _])]
+          result (handlers/get-repo-languages db [])]
       (is (= result db)))))
 
 (deftest process-repo-languages-response
@@ -47,7 +54,7 @@
 (deftest get-repo-branches
   (testing "returns map as passed in"
     (let [db {:test "test"}
-          result (handlers/get-repo-branches db [_ _])]
+          result (handlers/get-repo-branches db [])]
       (is (= result db)))))
 
 (deftest process-repo-branches-response
@@ -59,7 +66,7 @@
 (deftest get-repo-tree
   (testing "returns map as passed in"
     (let [db {:test "test"}
-          result (handlers/get-repo-tree db [_ _])]
+          result (handlers/get-repo-tree db [])]
       (is (= result db)))))
 
 (deftest process-repo-tree-response
