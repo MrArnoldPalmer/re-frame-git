@@ -25,7 +25,9 @@
   [db [response loading-flag-vector]]
   (println "An API error has occured")
   (println (:error-text response))
-  (assoc-in db loading-flag-vector false))
+  (if (nil? loading-flag-vector)
+    db
+    (assoc-in db loading-flag-vector false)))
 
 (register-handler
   :initialize-db
