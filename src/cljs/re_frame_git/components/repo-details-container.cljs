@@ -1,5 +1,6 @@
 (ns re-frame-git.components.repo-details-container
     (:require [re-frame.core :refer [subscribe]]
+              [re-com.core :refer [md-icon-button]]
               [re-frame-git.components.loading-indicator :refer [loading-indicator]]
               [re-frame-git.components.file-tree-graph-container :refer [file-tree-graph-container]]))
 
@@ -13,4 +14,8 @@
       [loading-indicator]
       [:div
        (:full_name repo-details)
+       [md-icon-button
+        :md-icon-name "zmdi-github"
+        :size :larger
+        :class "repoDetailsIcon"]
        [file-tree-graph-container repo-tree]])))

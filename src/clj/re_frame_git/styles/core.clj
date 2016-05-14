@@ -1,5 +1,6 @@
 (ns re-frame-git.styles.core
-  (:require [garden.def :refer [defstyles]]))
+  (:require [garden.def :refer [defstyles]]
+            [re-frame-git.styles.components.repo-details :refer [repo-details]]))
 
 (defstyles screen
   [:body {:margin "auto"
@@ -10,4 +11,5 @@
            :line-height 0.95
            :overflow "hidden"
            :position "absolute"
-           :border-radius "6px"}])
+           :border-radius "6px"}]
+  repo-details)
