@@ -12,3 +12,8 @@
   (testing "returns true with map argument whose values for all existing keys are not nil"
     (let [result (utils/item-loaded {:a "string" :b 2 :c []})]
       (is (= result true)))))
+
+(deftest build-repo-keyword
+  (testing "takes username and repo-name strings and returns properly formatted lowercase full repo-name as keyword type")
+  (let [result (utils/build-repo-keyword "username" "repo-name")]
+    (is (= result :username/repo-name))))
