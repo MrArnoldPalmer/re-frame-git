@@ -44,6 +44,8 @@
 (register-handler :set-current-repo repo-handlers/set-current-repo)
 (register-handler :get-repo repo-handlers/get-repo)
 (register-handler :process-repo-response repo-handlers/process-repo-response repo-loaded)
+(register-handler :get-repo-readme repo-handlers/get-repo-readme)
+(register-handler :process-repo-readme-response repo-handlers/process-repo-readme-response repo-loaded)
 (register-handler :get-repo-languages repo-handlers/get-repo-languages)
 (register-handler :process-repo-languages-response repo-handlers/process-repo-languages-response repo-loaded)
 (register-handler :get-repo-branches repo-handlers/get-repo-branches)

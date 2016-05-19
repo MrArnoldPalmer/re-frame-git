@@ -38,13 +38,14 @@
         (dispatch [:load-repo-details username repo-name])
         (-> db
             (assoc-in
-              [:repo-details repo-keyword] {:tree nil :details nil :branches nil})
+              [:repo-details repo-keyword] {:tree nil :details nil :branches nil :readme nil})
             (assoc-in
               [:current-repo] {:loading true :tree nil :details nil :branches nil}))))))
 
 (defn load-repo-details
   [db [username repo-name]]
   (dispatch [:get-repo username repo-name])
+  (dispatch [:get-repo-readme username repo-name])
   (dispatch [:get-repo-branches username repo-name])
   db)
 
@@ -58,6 +59,17 @@
 (defn process-repo-response
   [db [username repo-name response]]
   (assoc-in db [:repo-details (build-repo-keyword username repo-name) :details] response))
+
+(defn get-repo-readme
+  [db [username repo-name]]
+  (GET (str "/api/github/repos/" username "/" repo-name "/readme?media-type=application/vnd.github.VERSION.raw")
+       #(dispatch [:process-repo-readme-response username repo-name %1])
+       #(dispatch [:api-error %1]))
+  db)
+
+(defn process-repo-readme-response
+  [db [username repo-name response]]
+  (assoc-in db [:repo-details (build-repo-keyword username repo-name) :readme] response))
 
 (defn get-repo-languages
   [db [username repo-name]]

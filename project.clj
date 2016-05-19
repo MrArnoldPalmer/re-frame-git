@@ -14,7 +14,8 @@
                  [ring "1.4.0"]
                  [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.0.2"]
-                 [prismatic/schema  "1.1.1"]]
+                 [prismatic/schema  "1.1.1"]
+                 [markdown-clj "0.9.89"]]
 
   :min-lein-version "2.5.3"
 

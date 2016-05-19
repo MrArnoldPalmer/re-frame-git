@@ -6,11 +6,12 @@
 
 (defn GET
   "Generic http GET function for handlers"
-  [endpoint success-handler error-handler]
-  (go (let [response (<! (client/get endpoint))]
-        (if (:success response)
-          (success-handler (:body response))
-          (error-handler response)))))
+  ([endpoint success-handler error-handler] (GET endpoint {} success-handler error-handler))
+  ([endpoint options success-handler error-handler]
+   (go (let [response (<! (client/get endpoint (if (nil? options) {} options)))]
+         (if (:success response)
+           (success-handler (:body response))
+           (error-handler response))))))
 
 (defn item-loaded
   [item-details]

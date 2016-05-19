@@ -1,6 +1,5 @@
 (ns re-frame-git.styles.core
-  (:require [garden.def :refer [defstyles]]
-            [re-frame-git.styles.components.repo-details :refer [repo-details]]))
+  (:require [garden.def :refer [defstyles]]))
 
 (defstyles screen
   [:body {:margin "auto"
