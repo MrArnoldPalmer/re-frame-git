@@ -62,7 +62,8 @@
 
 (defn get-repo-readme
   [db [username repo-name]]
-  (GET (str "/api/github/repos/" username "/" repo-name "/readme?media-type=application/vnd.github.VERSION.raw")
+  (GET (str "/api/github/repos/" username "/" repo-name "/readme")
+       {:headers {"accept" "application/vnd.github.VERSION.raw"}}
        #(dispatch [:process-repo-readme-response username repo-name %1])
        #(dispatch [:api-error %1]))
   db)

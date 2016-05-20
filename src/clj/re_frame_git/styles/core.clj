@@ -10,5 +10,4 @@
            :line-height 0.95
            :overflow "hidden"
            :position "absolute"
-           :border-radius "6px"}]
-  repo-details)
+           :border-radius "6px"}])

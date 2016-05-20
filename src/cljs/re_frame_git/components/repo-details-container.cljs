@@ -10,7 +10,8 @@
         is-loading (:loading @current-repo)
         repo-tree (:tree @current-repo)
         repo-details (:details @current-repo)
-        branches (:branches @current-repo)]
+        branches (:branches @current-repo)
+        readme-mardown (:readme @current-repo)]
     (if is-loading
       [loading-indicator]
       [:div
@@ -19,5 +20,5 @@
         :md-icon-name "zmdi-github"
         :size :larger
         :class "repoDetailsIcon"]
-       [readme "readme string"]
+       [readme readme-mardown]
        [file-tree-graph-container repo-tree]])))

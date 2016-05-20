@@ -5,13 +5,17 @@
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [re-frame-git.server.posts :refer [save-post get-posts get-post-by-id]]
-            [re-frame-git.server.github :refer [get-repositories get-repository-details github-api-request]]))
+            [re-frame-git.server.github :refer [github-api-request]]))
 
 (defn generate-response
-  [body]
-  {:status 200
-   :headers {"Content-Type" "application/json"}
-   :body body})
+  ([body]
+   {:status 200
+    :headers {"Content-Type" "application/json"}
+    :body body})
+  ([body headers]
+   {:status 200
+    :body body
+    :headers headers}))
 
 (defroutes server
   (GET "/" _
@@ -29,8 +33,12 @@
       (generate-response (get-post-by-id id)))
     (GET "/github/*" request
       (let [query-string (:query-string request)
-            endpoint (str (get-in request [:params :*]) (if query-string (str "?" query-string) nil))]
-        (generate-response (github-api-request endpoint))))))
+            endpoint (str (get-in request [:params :*]) (if query-string (str "?" query-string) nil))
+            headers (:headers request)]
+        (if (= (get headers "accept") "application/vnd.github.VERSION.raw")
+          (generate-response (github-api-request endpoint headers)
+                             {"Content-Type" "application/vnd.github.VERSION.raw; charset=utf-8"})
+          (generate-response (github-api-request endpoint headers)))))))
 
 (defroutes app
   (-> server

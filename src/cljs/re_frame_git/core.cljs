@@ -7,7 +7,10 @@
               [re-frame-git.config :refer [debug?]]
               [re-frame-git.routes :refer [hook-browser-navigation!]]
               [reagent-dev-tools.core :as dev-tools]
-              [reagent-dev-tools.state-tree :as dev-state]))
+              [reagent-dev-tools.state-tree :as dev-state]
+              [cljsjs.highlight]
+              [cljsjs.highlight.langs.bash]
+              [cljsjs.highlight.langs.clojure]))
 
 (when debug?
   (println "dev mode"))
@@ -22,7 +25,8 @@
              [dev-tools/dev-tool {}]]
             (.getElementById js/document "app"))
     (render [application-container]
-            (.getElementById js/document "app"))))
+            (.getElementById js/document "app")))
+  (.initHighlightingOnLoad js/hljs))
 
 (defn ^:export init [] 
   (hook-browser-navigation!)
