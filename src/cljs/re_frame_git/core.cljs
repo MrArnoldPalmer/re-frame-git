@@ -25,8 +25,7 @@
              [dev-tools/dev-tool {}]]
             (.getElementById js/document "app"))
     (render [application-container]
-            (.getElementById js/document "app")))
-  (.initHighlightingOnLoad js/hljs))
+            (.getElementById js/document "app"))))
 
 (defn ^:export init [] 
   (hook-browser-navigation!)
