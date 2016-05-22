@@ -10,7 +10,9 @@
               [reagent-dev-tools.state-tree :as dev-state]
               [cljsjs.highlight]
               [cljsjs.highlight.langs.bash]
-              [cljsjs.highlight.langs.clojure]))
+              [cljsjs.highlight.langs.clojure]
+              [cljsjs.highlight.langs.javascript]
+              [cljsjs.highlight.langs.xml]))
 
 (when debug?
   (println "dev mode"))
