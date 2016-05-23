@@ -4,6 +4,9 @@
             [compojure.route :refer [resources]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+            [ring.middleware.resource :refer [wrap-resource]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
+            [ring.middleware.not-modified :refer [wrap-not-modified]]
             [re-frame-git.server.posts :refer [save-post get-posts get-post-by-id]]
             [re-frame-git.server.github :refer [github-api-request]]))
 
@@ -44,4 +47,7 @@
   (-> server
       (wrap-keyword-params)
       (wrap-json-body {:keywords? true})
-      (wrap-json-response)))
+      (wrap-json-response)
+      (wrap-resource "public")
+      (wrap-content-type)
+      (wrap-not-modified)))

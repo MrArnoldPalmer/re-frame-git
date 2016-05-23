@@ -36,7 +36,7 @@
                                   [org.clojure/tools.nrepl "0.2.12"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
-                       :prep-tasks ["compile" ["cljsbuild" "once"]]
+                       :prep-tasks ["compile" ["cljsbuild" "once" "dev"]]
                        :hooks [leiningen.garden]
                        :aot :all
                        :omit-source true}}
@@ -80,4 +80,6 @@
                                    :asset-path "js/compiled/out"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false}}]})
+                                   <<<<<<< Updated upstream
+                                   :pretty-print false}}]}
+  :uberjar-name "re-frame-git.jar")
