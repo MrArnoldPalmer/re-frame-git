@@ -19,5 +19,8 @@
                        {:Authorization (str "token " (System/getenv "GITHUB_AUTH"))} 
                        {:accept (or
                                   (get headers "accept")
-                                  "application/json")})})]
-     (or (:body response) response))))
+                                  "application/json")})
+            :throw-exceptions false})]
+     (if (= (:status response) 404)
+       nil
+       (or (:body response) response)))))
