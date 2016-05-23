@@ -80,4 +80,5 @@
                                    :asset-path "js/compiled/out"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false}}]})
+                                   :pretty-print false}}]}
+  :uberjar-name "re-frame-git.jar")
