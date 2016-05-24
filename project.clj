@@ -80,6 +80,6 @@
                                    :asset-path "js/compiled/out"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   <<<<<<< Updated upstream
                                    :pretty-print false}}]}
-  :uberjar-name "re-frame-git.jar")
+  :uberjar-name "re-frame-git.jar"
+  :uberjar-exclusions [#"test/cljs"])
