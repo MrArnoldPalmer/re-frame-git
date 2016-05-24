@@ -36,7 +36,7 @@
                                   [org.clojure/tools.nrepl "0.2.12"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
              :uberjar {:source-paths ["src/clj" "src/cljs"]
-                       :prep-tasks ["compile" ["cljsbuild" "once" "dev"]]
+                       :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
                        :hooks [leiningen.garden]
                        :aot :all
                        :omit-source true}}
