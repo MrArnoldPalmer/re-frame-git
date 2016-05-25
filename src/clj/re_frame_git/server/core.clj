@@ -2,6 +2,7 @@
   (:require [clojure.java.io :as io]
             [compojure.core :refer :all]
             [compojure.route :refer [resources]]
+            [ring.adapter.jetty :as ring]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [ring.middleware.resource :refer [wrap-resource]]
@@ -51,3 +52,7 @@
       (wrap-resource "public")
       (wrap-content-type)
       (wrap-not-modified)))
+
+(defn -main []
+  (ring/run-jetty app {:port (Integer. (or (System/getenv "PORT") "8080"))
+                       :join false}))

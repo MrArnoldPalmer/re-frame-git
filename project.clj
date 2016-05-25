@@ -1,6 +1,8 @@
 (defproject re-frame-git "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.51"]
+                 [ring/ring-core "1.4.0"]
+                 [ring/ring-jetty-adapter "1.4.0"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0"]
                  [re-com "0.8.3"]
@@ -41,7 +43,9 @@
                        :aot :all
                        :omit-source true}}
 
-  :ring {:handler re-frame-git.server.core/app}
+  :main ^:skip-aot re-frame-git.server.core
+  :ring {:main re-frame-git.server.core
+         :handler re-frame-git.server.core/app}
 
   :figwheel {:ring-handler re-frame-git.server.core/app
              :repl false
