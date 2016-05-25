@@ -37,15 +37,15 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.12"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
-             :uberjar {:source-paths ["src/clj" "src/cljs"]
+             :uberjar {:main re-frame-git.server.core
+                       :source-paths ["src/clj" "src/cljs"]
                        :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
                        :hooks [leiningen.garden]
                        :aot :all
                        :omit-source true}}
 
   :main ^:skip-aot re-frame-git.server.core
-  :ring {:main re-frame-git.server.core
-         :handler re-frame-git.server.core/app}
+  :ring {:handler re-frame-git.server.core/app}
 
   :figwheel {:ring-handler re-frame-git.server.core/app
              :repl false
