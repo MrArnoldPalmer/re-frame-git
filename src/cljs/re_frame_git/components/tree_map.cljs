@@ -5,8 +5,8 @@
 
 (defn position
   []
-  (this-as this
-           (-> this
+  (this-as context
+           (-> context
                (.style "left"
                        (fn [d]
                          (str (.-x d) "px")))
