@@ -60,7 +60,7 @@
   :doo {:build "test"}
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/cljs" "src/clj"]
+                        :source-paths ["src/cljs"]
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
@@ -78,12 +78,13 @@
                                    :optimizations :none}}
 
                        {:id "min"
-                        :source-paths ["src/cljs" "src/clj"]
+                        :source-paths ["src/cljs"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
-                                   :optimizations :simple
+                                   :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false
+                                   :pretty-print true
+                                   :externs ["federico-b/d3-externs"]
                                    :verbose true}}]}
   :uberjar-name "re-frame-git.jar"
   :uberjar-exclusions [#"test/cljs"])

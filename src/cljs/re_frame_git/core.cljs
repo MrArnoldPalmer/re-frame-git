@@ -8,6 +8,7 @@
               [re-frame-git.routes :refer [hook-browser-navigation!]]
               [reagent-dev-tools.core :as dev-tools]
               [reagent-dev-tools.state-tree :as dev-state]
+              [cljsjs.d3]
               [cljsjs.highlight]
               [cljsjs.highlight.langs.bash]
               [cljsjs.highlight.langs.clojure]
