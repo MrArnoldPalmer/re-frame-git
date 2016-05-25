@@ -81,7 +81,7 @@
                         :source-paths ["src/cljs" "src/clj"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
-                                   :optimizations :advanced
+                                   :optimizations :simple
                                    :closure-defines {goog.DEBUG false}
                                    :pretty-print false
                                    :verbose true}}]}
