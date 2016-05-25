@@ -60,7 +60,7 @@
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
-                                   :output-dir "resources/public/js/compiled/out"
+                                   ;:output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
                                    :optimizations :none
                                    :source-map true
@@ -77,9 +77,11 @@
                         :source-paths ["src/cljs" "src/clj"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
+                                   :output-dir "resources/public/js/compiled/out"
                                    :asset-path "js/compiled/out"
-                                   :optimizations :advanced
+                                   :optimizations :none
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false}}]}
+                                   :pretty-print false
+                                   :verbose true}}]}
   :uberjar-name "re-frame-git.jar"
   :uberjar-exclusions [#"test/cljs"])
