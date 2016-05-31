@@ -30,7 +30,8 @@
             [lein-doo "0.1.6"]
             [lein-ring "0.9.7"]]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
+  :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                                    "target"
                                     "test/js"
                                     "resources/public/css/compiled"]
 
@@ -84,7 +85,7 @@
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
                                    :pretty-print true
-                                   :externs ["federico-b/d3-externs"]
+                                   :pseudo-names true
                                    :verbose true}}]}
   :uberjar-name "re-frame-git.jar"
   :uberjar-exclusions [#"test/cljs"])
