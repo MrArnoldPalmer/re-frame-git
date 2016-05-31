@@ -1,12 +1,11 @@
 (ns re-frame-git.components.tree-map
    (:require [re-frame.core :as re-frame]
-             [reagent.core :as reagent]
-             [cljsjs.d3]))
+             [reagent.core :as reagent]))
 
 (defn position
   []
-  (this-as this
-           (-> this
+  (this-as context
+           (-> context
                (.style "left"
                        (fn [d]
                          (str (.-x d) "px")))

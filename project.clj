@@ -1,6 +1,8 @@
 (defproject re-frame-git "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.51"]
+                 [ring/ring-core "1.4.0"]
+                 [ring/ring-jetty-adapter "1.4.0"]
                  [reagent "0.6.0-alpha"]
                  [re-frame "0.7.0"]
                  [re-com "0.8.3"]
@@ -35,12 +37,14 @@
   :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.12"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
-             :uberjar {:source-paths ["src/clj" "src/cljs"]
+             :uberjar {:main re-frame-git.server.core
+                       :source-paths ["src/clj" "src/cljs"]
                        :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
                        :hooks [leiningen.garden]
                        :aot :all
                        :omit-source true}}
 
+  :main ^:skip-aot re-frame-git.server.core
   :ring {:handler re-frame-git.server.core/app}
 
   :figwheel {:ring-handler re-frame-git.server.core/app
@@ -56,7 +60,7 @@
   :doo {:build "test"}
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths ["src/cljs" "src/clj"]
+                        :source-paths ["src/cljs"]
                         :figwheel {:on-jsload "re-frame-git.core/mount-root"}
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
@@ -74,12 +78,13 @@
                                    :optimizations :none}}
 
                        {:id "min"
-                        :source-paths ["src/cljs" "src/clj"]
+                        :source-paths ["src/cljs"]
                         :compiler {:main re-frame-git.core
                                    :output-to "resources/public/js/compiled/app.js"
-                                   :asset-path "js/compiled/out"
                                    :optimizations :advanced
                                    :closure-defines {goog.DEBUG false}
-                                   :pretty-print false}}]}
+                                   :pretty-print true
+                                   :externs ["federico-b/d3-externs"]
+                                   :verbose true}}]}
   :uberjar-name "re-frame-git.jar"
   :uberjar-exclusions [#"test/cljs"])
