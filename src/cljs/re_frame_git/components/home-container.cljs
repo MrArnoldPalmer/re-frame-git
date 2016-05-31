@@ -3,4 +3,7 @@
 
 (defn home-container
   []
-  [:p "Home"])
+  [:div
+   [:p "Home"]
+   [:button {:class "mdl-button mdl-js-button mdl-button--fab mdl-button--colored"}
+    [:i {:class "material-icons"} "add"]]])

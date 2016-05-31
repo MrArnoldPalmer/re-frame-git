@@ -11,7 +11,7 @@
                  [secretary "1.2.3"]
                  [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]
-                 [clj-http "3.0.1"]
+                 [clj-http "3.1.0"]
                  [ring "1.4.0"]
                  [ring/ring-json "0.4.0"]
                  [com.novemberain/monger "3.0.2"]

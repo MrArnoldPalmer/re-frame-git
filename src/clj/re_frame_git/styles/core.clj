@@ -4,7 +4,6 @@
 (defstyles screen
   [:body {:margin "auto"
           :position "relative"
-          :padding "20px"
           :height "100%"}]
   [:.node {:border "solid 1px white"
            :line-height 0.95

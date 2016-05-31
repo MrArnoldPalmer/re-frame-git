@@ -16,6 +16,6 @@
 
 (defn application-container []
   (let [current-route (subscribe [:current-route])]
-    [v-box
-     :children [[nav-bar]
-                (current-component @current-route)]]))
+    [:div
+     [nav-bar]
+     (current-component @current-route)]))
