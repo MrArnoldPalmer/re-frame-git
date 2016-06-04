@@ -10,6 +10,7 @@
                 [garden "1.3.2"]
                 [cljsjs/d3 "3.5.16-0"]
                 [cljsjs/highlight "8.4-0"]
+                [cljsjs/material "1.1.3-1"]
                 [secretary "1.2.3"]
                 [metosin/reagent-dev-tools "0.1.0"]
                 [compojure "1.5.0"]

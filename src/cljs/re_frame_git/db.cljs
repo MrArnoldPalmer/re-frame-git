@@ -10,9 +10,7 @@
    :repo-languages {}
    :repo-tree {:loading false
                :items nil}
-   :posts-list {:loading false
-                :items []}
    :repo-list {:loading false
                :items []
                :github-username nil}
-   :github-username "mrarnoldpalmer"})
+   :github-username nil})
