@@ -1,6 +1,7 @@
 (ns re-frame-git.repositories.handlers
   (:require [re-frame.core :as re-frame]
             [re-frame-git.db :as db]
+            [re-frame-git.handlers :as handlers]
             [re-frame-git.utils.core :as utils]
             [clojure.string :as string]))
 
@@ -25,3 +26,8 @@
 (defn process-repo-list-response
   [db [username response]]
   (update-in db [:repo-list] assoc :loading false :items response :github-username username))
+
+
+(handlers/register-handler :set-repo-list set-repo-list)
+(handlers/register-handler :get-repo-list get-repo-list)
+(handlers/register-handler :process-repo-list-response process-repo-list-response)

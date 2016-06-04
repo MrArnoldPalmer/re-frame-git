@@ -1,6 +1,8 @@
 (ns re-frame-git.repo-details.handlers
   (:require [re-frame.core :as re-frame]
             [re-frame-git.db :as db]
+            [re-frame-git.handlers :as handlers]
+            [re-frame-git.middleware :refer [repo-loaded]]
             [re-frame-git.utils.core :as utils]
             [clojure.string :as string]))
 
@@ -87,3 +89,16 @@
 (defn process-repo-tree-response
   [db [username repo-name response]]
   (assoc-in db [:repo-details (utils/build-repo-keyword username repo-name) :tree] response))
+
+(handlers/register-handler :load-repo-details load-repo-details)
+(handlers/register-handler :set-current-repo set-current-repo)
+(handlers/register-handler :get-repo get-repo)
+(handlers/register-handler :process-repo-response process-repo-response repo-loaded)
+(handlers/register-handler :get-repo-readme get-repo-readme)
+(handlers/register-handler :process-repo-readme-response process-repo-readme-response repo-loaded)
+(handlers/register-handler :get-repo-languages get-repo-languages)
+(handlers/register-handler :process-repo-languages-response process-repo-languages-response repo-loaded)
+(handlers/register-handler :get-repo-branches get-repo-branches)
+(handlers/register-handler :process-repo-branches-response process-repo-branches-response repo-loaded)
+(handlers/register-handler :get-repo-tree get-repo-tree)
+(handlers/register-handler :process-repo-tree-response process-repo-tree-response repo-loaded)

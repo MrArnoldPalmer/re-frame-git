@@ -1,8 +1,10 @@
 (ns re-frame-git.utils.core
-  (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [cljs.core.async :refer [<!]]
-            [cljs-http.client :as client]
-            [clojure.string :refer [lower-case]]))
+ (:require-macros [cljs.core.async.macros :refer [go]])
+ (:require [cljs.core.async :refer [<!]]
+           [cljs-http.client :as client]
+           [clojure.string :refer [lower-case]]
+           [re-frame.core :as re-frame]
+           [re-frame-git.config :as config]))
 
 (defn GET
   "Generic http GET function for handlers"
@@ -20,4 +22,3 @@
 (defn build-repo-keyword
   [username repo-name]
   (keyword (lower-case (str username "/" repo-name))))
-  
