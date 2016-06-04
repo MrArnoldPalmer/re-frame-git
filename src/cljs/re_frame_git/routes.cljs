@@ -1,21 +1,21 @@
 (ns re-frame-git.routes
-  (:require [re-frame.core :as re-frame]
-            [secretary.core :as secretary]
-            [goog.events :as events]
-            [goog.history.EventType :as EventType])
-  (:import goog.History))
+ (:require [re-frame.core :as re-frame]
+           [secretary.core :as secretary]
+           [goog.events :as events]
+           [goog.history.EventType :as EventType])
+ (:import goog.History))
 
 (secretary/set-config! :prefix "#")
 
-(secretary/defroute home-route "/" []
+(secretary/defroute home "/" []
   (re-frame/dispatch [:set-current-route "home"]))
 
-(secretary/defroute repositories-route "/repositories/:github-username" [github-username]
+(secretary/defroute repositories "/repositories/:github-username" [github-username]
   (re-frame/dispatch [:set-current-route "repositories"])
   (re-frame/dispatch [:set-repo-list github-username]))
 
 (secretary/defroute
-  repo-details-route
+  repo-details
   "/repositories/:github-username/:repo-name"
   [github-username repo-name]
   (re-frame/dispatch [:set-current-route "repo-details"])

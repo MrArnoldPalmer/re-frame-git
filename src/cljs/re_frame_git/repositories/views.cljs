@@ -1,10 +1,10 @@
-(ns re-frame-git.components.repositories-container
+(ns re-frame-git.repositories.views
   (:require [reagent.core :as reagent]
             [re-frame.core :refer [subscribe]]
             [re-frame-git.components.loading-indicator :refer [loading-indicator]]
             [re-frame-git.components.repo-list :refer [repo-list]]))
 
-(defn repositories-container
+(defn main
   []
   (let [repo-list-state (subscribe [:repo-list])
         loading (:loading @repo-list-state)

@@ -1,7 +1,7 @@
-(ns re-frame-git.components.home-container
+(ns re-frame-git.home.views
   (:require [reagent.core :as reagent]))
 
-(defn home-container
+(defn main
   []
   [:div
    [:p "Home"]

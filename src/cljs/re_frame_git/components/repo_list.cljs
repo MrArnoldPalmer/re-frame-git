@@ -1,13 +1,13 @@
 (ns re-frame-git.components.repo-list
   (:require [reagent.core :as reagent]
-            [re-frame-git.routes :refer [repo-details-route]]))
+            [re-frame-git.routes :as routes]))
 
 (defn repo-list
   [repo-list]
   [:div
    (map (fn [repo]
          [:a
-          {:href (repo-details-route
+          {:href (routes/repo-details
                    {:github-username (get-in repo [:owner :login])
                     :repo-name (:name repo)})
            :key (:full_name repo)}
