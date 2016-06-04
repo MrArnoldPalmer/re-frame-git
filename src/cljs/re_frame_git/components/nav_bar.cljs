@@ -1,8 +1,7 @@
 (ns re-frame-git.components.nav-bar
-  (:require [re-frame.core :as re-frame]
-            [re-com.core :refer [h-box gap]]
-            [re-frame-git.components.nav-bar-item :refer [nav-bar-item]]
-            [re-frame-git.routes :refer [home-route repositories-route]]))
+ (:require [re-frame.core :as re-frame]
+           [re-frame-git.components.nav-bar-item :refer [nav-bar-item]]
+           [re-frame-git.routes :refer [home-route repositories-route]]))
 
 (defn nav-bar
   []

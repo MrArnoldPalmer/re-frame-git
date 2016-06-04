@@ -1,8 +1,6 @@
 (ns re-frame-git.components.loading-indicator
-  (:require [re-frame.core :as re-frame]
-            [re-com.core :refer [throbber]]))
+ (:require [re-frame.core :as re-frame]))
 
 (defn loading-indicator
   []
-  [throbber
-   :size :large])
+  [:p "Loading..."])
