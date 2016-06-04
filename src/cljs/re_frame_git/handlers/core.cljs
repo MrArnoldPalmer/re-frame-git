@@ -3,8 +3,7 @@
             [re-frame-git.db :as db]
             [re-frame-git.config :as config]
             [re-frame-git.middleware.core :refer [repo-loaded]]
-            [re-frame-git.handlers.repo-handlers :as repo-handlers]
-            [re-frame-git.handlers.post-handlers :as post-handlers]))
+            [re-frame-git.handlers.repo-handlers :as repo-handlers]))
 
 (defn register-handler
   [handler-keyword handler-function & middleware]
@@ -29,13 +28,8 @@
     db
     (assoc-in db loading-flag-vector false)))
 
-(register-handler
-  :initialize-db
-  (fn []
-    db/default-db))
+(register-handler :initialize-db (fn [] db/default-db))
 (register-handler :set-current-route set-current-route)
-(register-handler :get-posts post-handlers/get-posts)
-(register-handler :process-posts-response post-handlers/process-posts-response)
 (register-handler :set-repo-list repo-handlers/set-repo-list)
 (register-handler :get-repo-list repo-handlers/get-repo-list)
 (register-handler :process-repo-list-response repo-handlers/process-repo-list-response)
