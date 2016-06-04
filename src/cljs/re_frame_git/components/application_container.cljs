@@ -1,10 +1,10 @@
 (ns re-frame-git.components.application-container
-  (:require [re-frame.core :refer [subscribe]]
-            [re-com.core :refer [v-box]]
-            [re-frame-git.components.nav-bar :refer [nav-bar]]
-            [re-frame-git.components.repositories-container :refer [repositories-container]]
-            [re-frame-git.components.home-container :refer [home-container]]
-            [re-frame-git.components.repo-details-container :refer [repo-details-container]]))
+ (:require [re-frame.core :refer [subscribe]]
+           [re-com.core :refer [v-box]]
+           [re-frame-git.components.nav-bar :refer [nav-bar]]
+           [re-frame-git.components.repositories-container :refer [repositories-container]]
+           [re-frame-git.components.home-container :refer [home-container]]
+           [re-frame-git.components.repo-details-container :refer [repo-details-container]]))
 
 (defn current-component
   [current-route]
