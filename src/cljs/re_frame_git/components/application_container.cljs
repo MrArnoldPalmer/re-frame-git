@@ -16,7 +16,7 @@
 
 (defn application-container []
   (let [current-route (subscribe [:current-route])]
-    [:div {:class "mdl-layout mdl-js-layout"}
+    [:div {:class "mdl-layout mdl-js-layout mdl-layout--fixed-header"}
      [nav-bar]
      [nav-drawer]
      [:main.mdl-layout__content
