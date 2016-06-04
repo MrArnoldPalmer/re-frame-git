@@ -1,9 +1,9 @@
 (ns re-frame-git.routes
- (:require [re-frame.core :as re-frame]
-           [secretary.core :as secretary]
-           [goog.events :as events]
-           [goog.history.EventType :as EventType])
- (:import goog.History))
+  (:require [re-frame.core :as re-frame]
+            [secretary.core :as secretary]
+            [goog.events :as events]
+            [goog.history.EventType :as EventType])
+  (:import goog.History))
 
 (secretary/set-config! :prefix "#")
 
