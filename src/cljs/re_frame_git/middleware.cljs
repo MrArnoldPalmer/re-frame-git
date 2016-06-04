@@ -1,4 +1,4 @@
-(ns re-frame-git.middleware.core
+(ns re-frame-git.middleware
   (:require [re-frame.core :refer [dispatch]]
             [re-frame-git.utils.core :refer [build-repo-keyword item-loaded]]))
 

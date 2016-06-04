@@ -1,8 +1,8 @@
-(ns re-frame-git.handlers.core
+(ns re-frame-git.handlers
   (:require [re-frame.core :as re-frame :refer [trim-v debug]]
             [re-frame-git.db :as db]
             [re-frame-git.config :as config]
-            [re-frame-git.middleware.core :refer [repo-loaded]]
+            [re-frame-git.middleware :refer [repo-loaded]]
             [re-frame-git.handlers.repo-handlers :as repo-handlers]))
 
 (defn register-handler
