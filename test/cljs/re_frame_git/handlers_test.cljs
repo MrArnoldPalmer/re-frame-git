@@ -1,6 +1,6 @@
-(ns re-frame-git.handlers.core-test
+(ns re-frame-git.handlers.test
   (:require [cljs.test :refer-macros [deftest testing is]]
-            [re-frame-git.handlers.core :as handlers]))
+            [re-frame-git.handlers :as handlers]))
 
 (deftest set-current-route
   (testing "sets :current-route key in app state to route string parameter"

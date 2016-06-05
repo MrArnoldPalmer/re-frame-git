@@ -14,12 +14,10 @@
              (if (nil? middleware) [] middleware)))
     handler-function))
 
-(register-handler
-  :set-current-route
-  (fn
-    [db [route]]
-    (assoc-in db [:current-route] route)))
-
+(defn set-current-route
+  [db [route]]
+  (assoc-in db [:current-route] route))
+  
 (defn api-error
   [db [response loading-flag-vector]]
   (println "An API error has occured")
@@ -28,5 +26,6 @@
     db
     (assoc-in db loading-flag-vector false)))
 
+(register-handler :set-current-route set-current-route)
 (register-handler :api-error api-error)
 (register-handler :initialize-db (fn [] db/default-db))
