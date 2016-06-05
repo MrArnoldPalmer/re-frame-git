@@ -1,6 +1,6 @@
 (ns re-frame-git.repositories.handlers
   (:require [re-frame.core :as re-frame]
-            [re-frame-git.db :as db]
+            [re-frame-git.repositories.db :as db]
             [re-frame-git.handlers :as handlers]
             [re-frame-git.utils.core :as utils]
             [clojure.string :as string]))
