@@ -1,14 +1,13 @@
 (ns re-frame-git.server.core
- (:require [clojure.java.io :as io]
-           [compojure.core :refer :all]
-           [compojure.route :refer [resources]]
-           [ring.adapter.jetty :as ring]
-           [ring.middleware.keyword-params :refer [wrap-keyword-params]]
-           [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-           [ring.middleware.resource :refer [wrap-resource]]
-           [ring.middleware.content-type :refer [wrap-content-type]]
-           [ring.middleware.not-modified :refer [wrap-not-modified]]
-           [re-frame-git.server.github :refer [github-api-request]]))
+  (:require [clojure.java.io :as io]
+            [compojure.core :refer :all]
+            [ring.adapter.jetty :as ring]
+            [ring.middleware.keyword-params :as keyword-params]
+            [ring.middleware.json :as json]
+            [ring.middleware.resource :as resource]
+            [ring.middleware.content-type :as content-type]
+            [ring.middleware.not-modified :as not-modified]
+            [re-frame-git.server.github :refer [github-api-request]]))
 
 (defn generate-response
   ([body]
@@ -37,12 +36,12 @@
 
 (defroutes app
   (-> server
-      (wrap-keyword-params)
-      (wrap-json-body {:keywords? true})
-      (wrap-json-response)
-      (wrap-resource "public")
-      (wrap-content-type)
-      (wrap-not-modified)))
+      (keyword-params/wrap-keyword-params)
+      (json/wrap-json-body {:keywords? true})
+      (json/wrap-json-response)
+      (resource/wrap-resource "public")
+      (content-type/wrap-content-type)
+      (not-modified/wrap-not-modified)))
 
 (defn -main []
   (ring/run-jetty app {:port (Integer. (or (System/getenv "PORT") "8080"))

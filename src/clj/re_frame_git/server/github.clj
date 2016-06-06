@@ -1,7 +1,6 @@
 (ns re-frame-git.server.github
- (:require [clj-http.client :as client]
-           [clojure.walk :refer [keywordize-keys]]
-           [environ.core :refer [env]]))
+  (:require [clj-http.client :as client]
+            [environ.core :refer [env]]))
 
 
 (defn- build-api-url
