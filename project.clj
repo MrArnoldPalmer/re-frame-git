@@ -12,6 +12,7 @@
                  [cljsjs/highlight "8.4-0"]
                  [cljsjs/material "1.1.3-1"]
                  [secretary "1.2.3"]
+                 [venantius/accountant "0.1.7"]
                  [metosin/reagent-dev-tools "0.1.0"]
                  [compojure "1.5.0"]
                  [clj-http "3.1.0"]
@@ -44,7 +45,6 @@
   :ring {:handler re-frame-git.server.core/app}
 
   :figwheel {:ring-handler re-frame-git.server.core/app
-             :nrepl-port 7888
              :css-dirs ["resources/public/css"]}
 
   :garden {:builds [{:id "screen"
