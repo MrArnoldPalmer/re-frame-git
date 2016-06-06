@@ -1,16 +1,10 @@
-(ns re-frame-git.db)
+(ns re-frame-git.db
+  (:require [re-frame-git.repositories.db :as repositories-db]
+            [re-frame-git.repo-details.db :as repo-details-db]))
 
 (def default-db
-  {:current-route ""
-   :current-repo {:loading false
-                  :details nil
-                  :tree nil
-                  :languages nil}
-   :repo-details {}
-   :repo-languages {}
-   :repo-tree {:loading false
-               :items nil}
-   :repo-list {:loading false
-               :items []
-               :github-username nil}
-   :github-username nil})
+  (merge
+    {:current-route ""
+     :github-username nil}
+    repositories-db/default-db
+    repo-details-db/default-db))

@@ -1,9 +1,13 @@
 (ns re-frame-git.core
- (:require [reagent.core :as reagent :refer [render]]
-           [re-frame.core :as re-frame :refer [dispatch dispatch-sync]]
-           [re-frame-git.handlers.core]
+ (:require [reagent.core :as reagent]
+           [re-frame.core :as re-frame]
+           [re-frame-git.handlers]
+           [re-frame-git.repositories.handlers]
+           [re-frame-git.repo-details.handlers]
            [re-frame-git.subs]
-           [re-frame-git.components.application-container :refer [application-container]]
+           [re-frame-git.repositories.subs]
+           [re-frame-git.repo-details.subs]
+           [re-frame-git.views :as views]
            [re-frame-git.config :refer [debug?]]
            [re-frame-git.routes :refer [hook-browser-navigation!]]
            [reagent-dev-tools.core :as dev-tools]
@@ -24,14 +28,14 @@
 
 (defn mount-root []
   (if debug?
-    (render [:div
-             [application-container]
-             [dev-tools/dev-tool {}]]
-            (.getElementById js/document "app"))
-    (render [application-container]
-            (.getElementById js/document "app"))))
+    (reagent/render
+      [:div
+       [views/main]
+       [dev-tools/dev-tool {}]]
+      (.getElementById js/document "app"))
+    (reagent/render [views/main] (.getElementById js/document "app"))))
 
 (defn ^:export init [] 
   (hook-browser-navigation!)
-  (dispatch-sync [:initialize-db])
+  (re-frame/dispatch-sync [:initialize-db])
   (mount-root))
