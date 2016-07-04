@@ -1,15 +1,21 @@
 (ns re-frame-git.routes
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary]
-            [accountant.core :as accountant]))
+            [goog.events :as events]
+            [goog.history.EventType :as EventType])
+  (:import goog.History))
 
-(accountant/configure-navigation!
-  {:nav-handler (fn [path]
-                  (secretary/dispatch! path))
-   :path-exists? (fn [path]
-                   (secretary/locate-route path))})
+(defn hook-browser-navigation! []
+  (doto (History.)
+    (events/listen
+     EventType/NAVIGATE
+     (fn [event]
+       (secretary/dispatch! (.-token event))))
+    (.setEnabled true)))
 
 (defn app-routes []
+  (hook-browser-navigation!)
+  (secretary/set-config! :prefix "#")
   (secretary/defroute home "/" []
     (re-frame/dispatch [:set-current-route "home"]))
   (secretary/defroute repositories "/repositories/:github-username" [github-username]
